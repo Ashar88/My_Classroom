@@ -3,7 +3,8 @@ const classdata=[{
     id:"1",
     name:"english",
     teacher:"umer",
-     section:"BSSE"
+     section:"BSSE",
+     
 },{
     id:"2",
     name:"Urdu",
@@ -12,7 +13,7 @@ const classdata=[{
 },{
     id:"3",
     name:"Software",
-    teacher:"Ashar",
+    teacher:"Zoha",
     section:"BSSE"
 }]
 

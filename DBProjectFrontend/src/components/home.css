@@ -23,6 +23,7 @@
 
 .navbar {
     background-color: #75c9b7;;
+    
 }
 
 
@@ -87,7 +88,14 @@
 .dot {
     float: right;
 }
-
+.nav-item1{
+color:white;
+margin-right: 25px;
+}
+.nav-item1:hover {
+    color: grey;
+    
+}
 #sidebarmenu {
     position: fixed;
 }

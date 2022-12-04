@@ -8,8 +8,13 @@ import Abc from './components/Abc';
 import Box from './components/Box';
 import NavBarBox from './components/NavBarBox';
 import Home2 from './components/Home2';
+import NavBarClass from './components/NavBarClass';
+import ClassStructure from './components/ClassStructure';
+import ClassWork from './components/ClassWork';
+import  People  from './components/People';
+import Assignment from './components/Assignment';
 function App() {
-  const{Session}=useGlobalContext();
+  const{Session,loginstate}=useGlobalContext();
   
 
   
@@ -17,16 +22,23 @@ function App() {
 
     
     <>
-      { <Router>
+
+    
+       { <Router>
         <Routes>
           <Route exact path="/" element={<Login/>}/>
           <Route exact path="/Home" element={<Home2/>}/>
-                  <Route exact path="/class/:id" element={<Abc/>}/>  
-            
+          
+          <Route exact path="/class/:id" element={<ClassStructure/>}/>  
+          <Route  path="/class/:id/people" element={<People/>}/>
+            <Route  path="/class/:id/classwork" element={<ClassWork/>}/>
           
         </Routes>
-      </Router> }
-      
+      </Router>    } 
+      { 
+        
+        
+      }
       
       
       

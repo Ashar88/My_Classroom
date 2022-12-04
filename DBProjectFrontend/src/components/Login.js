@@ -11,7 +11,7 @@ const Login = () => {
     const [password,setpassword]=useState('');
     const [validdata,setvaliddata]=useState(data)
     const [check,setcheck]=useState(false);
-    const{SetSession}=useGlobalContext();
+    const{SetSession,setloginstate}=useGlobalContext();
     const ch=useRef(false)
     const nav=useNavigate();
     
@@ -26,6 +26,7 @@ const Login = () => {
                 if(curr.password===password)
                 {
                    SetSession({name:name,password:password});
+                   setloginstate(true);
                     nav('/home')
                     
                 }
@@ -51,7 +52,7 @@ const Login = () => {
  }}/>
  
 <label >Password:</label>
-<input type="text" placeholder="*********" value={password} onChange={(e)=>{
+<input type="password" placeholder="*********" value={password} onChange={(e)=>{
     setpassword(e.target.value)
 }}/>
 <button className="l">Login</button>
