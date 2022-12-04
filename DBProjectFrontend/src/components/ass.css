@@ -52,6 +52,7 @@
 
 .class-comments {
     margin: 20px 10px;
+   
     color: #505152;
     font-family: "Google Sans", Roboto, Arial, sans-serif;
     font-size: 0.875rem;
@@ -60,15 +61,22 @@
 }
 
 .class-comments .comments input {
-    width: 100%;
+    width: 80%;
+    
     border: none;
     border: 2px solid #E4E4E4;
     border-radius: 18px;
     height: 40px;
 }
 
+.btn{
+    border-style: "none";
+    color:#6C6969;
+    margin-left:0px;
+}
 .class-comments .comments {
     margin-top: 8px;
+    display: "flex";
 
 
     width: 107%;

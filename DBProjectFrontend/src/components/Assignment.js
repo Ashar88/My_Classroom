@@ -3,10 +3,13 @@ import { Button, IconButton } from '@mui/material';
 import React, { useState } from 'react'
 import UploadButton from './UploadButton'
 import './ass.css'
+import data from './assignmentData'
 import NavBarClass from './NavBarClass';
 import { useEffect } from 'react';
-const Assignment = () => {
+import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
+const Assignment = ({name,id}) => {
     const [upload,setupload]=useState(true);
+    const[comment,setcomment]=useState("");
 
     
   return (
@@ -15,7 +18,7 @@ const Assignment = () => {
     
       <div class="flexxx">
     <div class="asg-sec">
-        <h2 class="text-primary line1">Assignment 01</h2>
+        <h2 class="text-primary line1">Assignment1</h2>
         <div class="td">
             <span>Teacher name</span>
             <span>.Date</span>
@@ -32,18 +35,22 @@ const Assignment = () => {
            </div>
            </div>
 
-
+          <form>
            <div class="class-comments">
             <span><i class="fa-solid fa-user"></i>Class comments</span>
             <div class="comments">
-                <input type="text" placeholder="Add class comments"/>
+                <input type="text" placeholder="Add class comments" onChange={(e)=>{setcomment(e.target.value)}}/>
+            <button  className='btn'><DoubleArrowIcon/></button>
+           
             </div>
         </div>
+        </form>
+
     </div>
     
     
    <div class="submission ">
-     <h3>Your work</h3>
+     <h3>    Your work </h3>
      <span>Status</span>
      {!upload &&<div class="upload">
         <span class="f">File name</span>
@@ -52,10 +59,7 @@ const Assignment = () => {
     { ! upload && <button type="btn" class="btn btn-outline-primary">submit</button> }
     
 
-        <div class="add-comment">
-            <div class="heading"><i class="fa-solid fa-user"></i> <span>Private comments</span></div>
-            <input type="text" placeholder="Add private comment"/>
-         </div>
+        
    </div>
    
 </div>

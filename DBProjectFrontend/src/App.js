@@ -32,7 +32,7 @@ function App() {
           <Route exact path="/class/:id" element={<ClassStructure/>}/>  
           <Route  path="/class/:id/people" element={<People/>}/>
             <Route  path="/class/:id/classwork" element={<ClassWork/>}/>
-          
+          <Route  path="/class/:id/classwork/:id" element={<Assignment/>}/>
         </Routes>
       </Router>    } 
       { 

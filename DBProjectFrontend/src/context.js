@@ -7,7 +7,7 @@ const AppContext=React.createContext()
 
 const AppProvider=({children})=>{
 
-    
+    const[assignId,setassignId]=useState("");
     const [navbarb,setnavbarb]=useState(false)
      
 const InitialSession={
@@ -28,7 +28,7 @@ const [isclasswork,setclasswork]=useState(false);
 const closedsidebar=()=>{
     setissidebaropen(false);
 }
-    return <AppContext.Provider value={{Session,SetSession,navbarb,setnavbarb,issidebaropen,opensidebar,closedsidebar,setissidebaropen,classid,setclassid,setclickpeople,clickpeople,isclasswork,setclasswork,loginstate,setloginstate}}>{children}</AppContext.Provider>
+    return <AppContext.Provider value={{Session,SetSession,navbarb,setnavbarb,issidebaropen,opensidebar,closedsidebar,setissidebaropen,classid,setclassid,setclickpeople,clickpeople,isclasswork,setclasswork,loginstate,setloginstate,assignId,setassignId}}>{children}</AppContext.Provider>
 }
 
 export const useGlobalContext=()=>{

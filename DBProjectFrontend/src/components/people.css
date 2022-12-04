@@ -7,8 +7,17 @@
     font-weight: bold;
 }
 
-
-
+.bttnn{
+    border:none;
+    margin:2vw;
+    
+    display: flex;
+    width:60vw;
+    border-radius: 10px;
+}
+.bttnn:hover{
+    background-color:aquamarine
+}
 
 .options {
     margin-top: 10px;
