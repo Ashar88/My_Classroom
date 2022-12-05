@@ -6,19 +6,21 @@ public class Class {
 	private String class_name;
 	private String course_title;
 	private String Course_Code;
+	private String Unique_class_code;
 	private String description;
 	
     public Class() {
 		super();
 	}
 
-	public Class(int class_id, String class_name, String course_title, String course_Code, String description) {
+	public Class(int class_id, String class_name, String course_title, String course_Code, String unique, String description) {
 		super();
 		this.class_id = class_id;
 		this.class_name = class_name;
 		this.course_title = course_title;
-		Course_Code = course_Code;
+		this.Course_Code = course_Code;
 		this.description = description;
+		this.Unique_class_code = unique;
 	}
 	
 	
@@ -58,6 +60,14 @@ public class Class {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getUnique_class_code() {
+		return Unique_class_code;
+	}
+
+	public void setUnique_class_code(String unique_class_code) {
+		Unique_class_code = unique_class_code;
 	}
 	
 
