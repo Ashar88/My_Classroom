@@ -1,4 +1,4 @@
-package com.ashar.MyClassroom.service.Teacher;
+package com.ashar.MyClassroom.service.Post;
 
 import java.sql.SQLException;
 import java.util.Map;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.ashar.MyClassroom.repository.Teacher.TeacherRepository;
 
 @Service
-public class TeacherServiceImp implements TeacherService {
+public class PostServiceImp implements PostService {
 
 	@Autowired
 	private TeacherRepository TeacherRepo;

@@ -1,4 +1,4 @@
-package com.ashar.MyClassroom.controller.Teacher;
+package com.ashar.MyClassroom.controller.Grade;
 
 import java.sql.SQLException;
 import java.util.Map;
@@ -15,7 +15,7 @@ import com.ashar.MyClassroom.service.Teacher.TeacherService;
 
 
 @RestController
-public class teacherController {
+public class GradeController {
 
 	@Autowired
 	private TeacherService TeacherService;

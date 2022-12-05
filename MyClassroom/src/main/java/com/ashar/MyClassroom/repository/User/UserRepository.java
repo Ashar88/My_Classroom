@@ -1,4 +1,4 @@
-package com.ashar.MyClassroom.repository.Teacher;
+package com.ashar.MyClassroom.repository.User;
 
 import java.sql.CallableStatement;
 import java.sql.SQLException;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public class TeacherRepository {
+public class UserRepository {
 
 	@Autowired
 	private DataSource dataSource;

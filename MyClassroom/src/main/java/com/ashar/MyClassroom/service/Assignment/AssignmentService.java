@@ -1,9 +1,9 @@
-package com.ashar.MyClassroom.service.Teacher;
+package com.ashar.MyClassroom.service.Assignment;
 
 import java.sql.SQLException;
 import java.util.Map;
 
-public interface TeacherService {
+public interface AssignmentService {
 
 	void CreateClassroom(String username, Map<String, String> obj) throws SQLException;
 
