@@ -11,7 +11,7 @@ html {
 .container {
     height: 100vh;
     width: 100%;
-    
+    margin: 0;
     display: grid;
 
     grid-template-columns: 50% auto;
@@ -60,6 +60,11 @@ html {
     border-radius: 2px;
 
 }
+.lia:hover{
+    color:#2e8d78;
+    text-decoration: none;
+    
+}
 .s{
     color: red;
 }
@@ -93,7 +98,8 @@ html {
 
 .item2 {
     background-color: #75c9b7;
-    ;
+    width: 200%;
+    margin:0px;
 
 }
 

@@ -14,6 +14,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
+import './link.css'
 import MailIcon from '@mui/icons-material/Mail';
 import classdata from './classdata'
 const Abc = () => {
@@ -44,13 +45,13 @@ const Abc = () => {
     >
       <List>
         {classdata.map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
+          <ListItem key={text} disablePadding >
+           <Link to={`/class/${text.id}`} className='linkss'> <ListItemButton >
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>
               <ListItemText primary={text.name} />
-            </ListItemButton>
+            </ListItemButton></Link>
           </ListItem>
         ))}
       </List>

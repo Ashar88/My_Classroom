@@ -3,6 +3,12 @@
     flex-direction: row;
     justify-content: space-between;
 }
+.bo{
+border: 2px solid #bebebe;
+border-radius: 25px;
+padding: 6px;
+width: 80%;
+}
 .asg-sec {
     margin: 10px 100px;
 
@@ -11,6 +17,11 @@
     height: 120px;
     margin-top: 20px;
     font-family: Arial, Helvetica, sans-serif;
+}
+ .thin {
+    color: #6C6969;
+    font-weight: 100;
+    
 }
 
 .asg-sec .td {
@@ -144,7 +155,21 @@
     width: 104%;
 
 }
+.class-comments .comments-quantity {
+    color: #060303;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    display: block;
 
+    margin-top: 6px;
+    margin-bottom: 20px;
+}
+
+ .class-comments .co {
+     font-size: 16px;
+     ;
+     color: black;
+ }
+  
 .add-comment input {
     border: 2px solid #E4E4E4;
     border-radius: 10px;

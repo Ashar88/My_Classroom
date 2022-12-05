@@ -4,6 +4,7 @@ import NavBarClass from './NavBarClass'
 import { useGlobalContext } from '../context'
 import { useNavigate } from 'react-router-dom';
 import ClassWork from './ClassWork';
+import Stream from './Stream';
 const ClassStructure = () => {
     const {navbarb,setnavbarb,classid,clickpeople,isclasswork}=useGlobalContext();
     const nav=useNavigate();
@@ -17,18 +18,18 @@ const ClassStructure = () => {
    
    
     <NavBarClass/>
-    
+    <Stream/>
     {
       
-         clickpeople?(nav(`/class/${classid}/people`)):"" 
+         
        
     }
     {
       
-       isclasswork?(nav(`/class/${classid}/classwork`)):""
+       
     }
     {
-      console.log(isclasswork)
+      
     }
       
     </div>

@@ -34,7 +34,7 @@ const NavBarClass = () => {
  const [anchorElNav, setAnchorElNav] = React.useState(null);
  const {clickpeple,classid,setclickpeople,setclasswork,isclasswork}=useGlobalContext();
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const links=[{name:"Stream",link:""},{name:"ClassWork",link:`/class/${classid}/classwork`}, {name:"People",link:`/class/${classid}/people`}]
+  const links=[{name:"Stream",link:`/class/${classid}`},{name:"ClassWork",link:`/class/${classid}/classwork`}, {name:"People",link:`/class/${classid}/people`}]
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };

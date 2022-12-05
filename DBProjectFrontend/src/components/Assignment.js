@@ -13,9 +13,10 @@ const Assignment = ({name,id}) => {
 
     
   return (
+    
 
     <div>
-    
+    <NavBarClass/>
       <div class="flexxx">
     <div class="asg-sec">
         <h2 class="text-primary line1">Assignment1</h2>
@@ -41,8 +42,12 @@ const Assignment = ({name,id}) => {
             <div class="comments">
                 <input type="text" placeholder="Add class comments" onChange={(e)=>{setcomment(e.target.value)}}/>
             <button  className='btn'><DoubleArrowIcon/></button>
-           
+          <span class="comments-quantity"><i class="fa-solid fa-user"></i> 2 Class comments</span>
+            <h6 class="co"><i class="fa-solid fa-user"></i> Ashar <span class="thin">4:30pm</span></h6><p className='bo'>I am ASHAR ,and I like to interfere at every matter.</p>
+            
             </div>
+
+
         </div>
         </form>
 

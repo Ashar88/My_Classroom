@@ -25,7 +25,7 @@ const Home2 = () => {
     <div>
     <NavBarBox/>
     
-    <div class="main">
+    <div class="main1">
     {
         data.map((curr)=>{
             

@@ -42,7 +42,7 @@ const NavBarBox = () => {
     <Button sx={{marginTop:"10px"}}> Submit</Button>
   </Box>
 </StyleModal>
-        <li className="nav-item"><button type="button" className="nav-link btn btn-danger id-btn" >ID</button></li>
+        {/* <li className="nav-item"><button type="button" className="nav-link btn btn-danger id-btn" >ID</button></li> */}
     </ul>
    </div>
 </nav>
