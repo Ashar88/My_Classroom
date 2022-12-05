@@ -4,13 +4,36 @@ import FileUploadIcon from '@mui/icons-material/FileUpload';
 import SendIcon from '@mui/icons-material/Send';
 import './Style.css'
 import { Button } from '@mui/material';
-import data from './StreamData'
+import {data,commentPerson} from './StreamData'
+import classdata from './classdata'
+import { useGlobalContext } from '../context';
+import { useEffect } from 'react';
 const Stream = () => {
 
+    const {classid}=useGlobalContext();
     const [data1,setdata1]=useState(data);
+    const [classdata1,setclassdata1]=useState(classdata);
+    const [classarray,setclassarray]=useState('')
+    const filterclass=()=>{
+
+const newarr=classdata.filter((curr)=>{
+        if (curr.id ==classid){
+          setclassarray(curr.name)
+          console.log(curr.id)
+          
+        }
+      })
+
+      
+      
+
+    }
+    useEffect(()=>{
+      filterclass();
+    },[])
   return (
     <div><div class=" headerrr">
-      <h1 class="elements"> Demo Class Name</h1>
+      <h1 class="elements"> {classarray}</h1>
       <h3 class="elements">SECTION </h3>
     </div>
 <div class="flex">
@@ -41,7 +64,18 @@ const Stream = () => {
         </div>
         <div class="class-comments stream-comments">
            
-             <h6 class="co"><i class="fa-solid fa-user"></i> K200346 Umer Hussain<span class="time">2:00pm</span></h6><p>Acknowledged!.</p>
+             {
+              commentPerson.map((curr)=>{
+                return(
+                  
+                  <div>
+                  <h6 class="co"><i class="fa-solid fa-user"></i> {curr.name}<span class="time">2:00pm</span></h6><p>{
+                   curr.commentdata 
+                  }.</p>
+               </div> )
+
+              })
+             }
            
              <div class="comments">
                  <input type="text" placeholder="Add class comments"/><i class="fa-solid fa-circle-arrow-right bg-secondary text-white"></i>
