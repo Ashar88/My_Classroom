@@ -7,6 +7,7 @@ public class Post {
 	private int class_id ;
 	private String title;
 	private String descript;
+	private String date_created;
 	
 	public Post() {
 		super();
@@ -26,6 +27,14 @@ public class Post {
 	public String toString() {
 		return "Post [post_id=" + post_id + ", username=" + username + ", class_id=" + class_id + ", title=" + title
 				+ ", descript=" + descript + "]";
+	}
+
+	public String getDate_created() {
+		return date_created;
+	}
+
+	public void setDate_created(String date_created) {
+		this.date_created = date_created;
 	}
 
 	public int getPost_id() {

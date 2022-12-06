@@ -1,46 +1,47 @@
 package com.ashar.MyClassroom.service.Post;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ashar.MyClassroom.repository.Teacher.TeacherRepository;
+import com.ashar.MyClassroom.entity.Post;
+import com.ashar.MyClassroom.repository.Post.PostRepository;
 
 @Service
 public class PostServiceImp implements PostService {
 
 	@Autowired
-	private TeacherRepository TeacherRepo;
+	private PostRepository PostRepo;
 
-	
 	@Override
-	public void CreateClassroom(String username, Map<String, String> obj) throws SQLException {
-		TeacherRepo.CreateClassroom(username, obj.get("name"), obj.get("title")
-				, obj.get("code"), obj.get("unique_code"), obj.get("descript"));
+	public boolean CreatePost(Map<String, String> obj) throws SQLException {
+		
+		Boolean result = PostRepo.createPost(obj.get("teacherUsername"), obj.get("class_id")
+				, obj.get("title"), obj.get("descript"));
+		return result;
+	}
+
+	@Override
+	public boolean editPost(Map<String, String> obj) throws SQLException {
+//		System.out.println(obj.get("post_id")+ obj.get("teacherUsername")+ obj.get("class_id")
+//				+ obj.get("title")+ obj.get("descript"));
+		
+	     return PostRepo.editPost(obj.get("post_id"), obj.get("teacherUsername"), obj.get("class_id")
+				, obj.get("title"), obj.get("descript"));
 	}
 
 
 	@Override
-	public void editClassroom(String username, Map<String, String> obj) throws SQLException {
-		TeacherRepo.CreateClassroom(username, obj.get("name"), obj.get("title")
-				, obj.get("code"), obj.get("unique_code"), obj.get("descript"));
+	public boolean deletePost( Map<String, String> obj) throws SQLException {
+		return PostRepo.deletePost(obj.get("post_id"), obj.get("teacherUsername") );
 	}
-
 
 	@Override
-	public void createPost(String username, String class_id, String title, String descript) throws SQLException {
-		TeacherRepo.createPost(username, class_id, title, descript);
-
+	public List<Post> viewAllPost(String classId) throws SQLException {
+		return PostRepo.viewAllPost(classId);
 	}
-
-
-	@Override
-	public void deleteClassroom(String username, String class_id, String title, String descript) throws SQLException {
-	
-		TeacherRepo.deleteClassroom(username, class_id, title, descript);
-	}
-	
 
 }

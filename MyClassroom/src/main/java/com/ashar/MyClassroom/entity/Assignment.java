@@ -3,7 +3,6 @@ package com.ashar.MyClassroom.entity;
 public class Assignment {
 
 	private int a_id;
-
 	private String username;
 	private int class_id;
 	private String a_title;

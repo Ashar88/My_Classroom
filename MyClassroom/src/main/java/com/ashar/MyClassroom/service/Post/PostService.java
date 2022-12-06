@@ -1,17 +1,21 @@
 package com.ashar.MyClassroom.service.Post;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
+
+import com.ashar.MyClassroom.entity.Post;
 
 public interface PostService {
 
-	void CreateClassroom(String username, Map<String, String> obj) throws SQLException;
 
-	void editClassroom(String username, Map<String, String> obj) throws SQLException;
+	boolean CreatePost(Map<String, String> obj) throws SQLException;
 
-	void createPost(String username, String class_id, String title, String descript) throws SQLException;
+	boolean editPost(Map<String, String> obj) throws SQLException;
 
-	void deleteClassroom(String username, String class_id, String string, String string2) throws SQLException;
+	boolean deletePost(Map<String, String> obj) throws SQLException;
+
+	List<Post> viewAllPost(String classId) throws SQLException; 
 
 
 }
