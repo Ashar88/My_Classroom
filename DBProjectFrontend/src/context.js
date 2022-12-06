@@ -14,7 +14,7 @@ const InitialSession={
   name:'',
   password:'',
 }
-
+const [isteacher,setisteacher]=useState(true)
 const [clickpeople,setclickpeople]=useState(false);
 const [classid,setclassid]=useState('');
 const [Session,SetSession]=useState(InitialSession)
@@ -52,7 +52,7 @@ const [isclasswork,setclasswork]=useState(false);
 const closedsidebar=()=>{
     setissidebaropen(false);
 }
-    return <AppContext.Provider value={{Session,SetSession,navbarb,setnavbarb,issidebaropen,opensidebar,closedsidebar,setissidebaropen,classid,setclassid,setclickpeople,clickpeople,isclasswork,setclasswork,loginstate,setloginstate,assignId,setassignId}}>{children}</AppContext.Provider>
+    return <AppContext.Provider value={{Session,SetSession,navbarb,setnavbarb,issidebaropen,opensidebar,closedsidebar,setissidebaropen,classid,setclassid,setclickpeople,clickpeople,isclasswork,setclasswork,loginstate,setloginstate,assignId,setassignId,isteacher,setisteacher}}>{children}</AppContext.Provider>
 }
 
 export const useGlobalContext=()=>{

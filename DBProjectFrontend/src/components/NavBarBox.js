@@ -17,7 +17,7 @@ const NavBarBox = () => {
   const [open,setopen]=useState(false)
   const [openCreateClass,SetOpenCreateClass]=useState(false)
   const {setissidebaropen,issidebaropen}=useGlobalContext();
-
+  const [joinclasscode,setjoinclass]=useState("")
   const [createClassname,SetcreateClassname]=useState("");
   const [createCode,SetcreateCode]=useState("");
   const [createDes,SetcreateDes]=useState("");
@@ -25,7 +25,7 @@ const NavBarBox = () => {
 
    const handleCreateClass=()=>{
     SetOpenCreateClass(false);
-    console.log(createClassname,createCode,createDes,createClassTitle);
+   /* console.log(createClassname,createCode,createDes,createClassTitle);*/
 
    }
    const handleJoinClass=()=>{
@@ -53,7 +53,7 @@ const NavBarBox = () => {
   <Box width={400} height={200} bgcolor="white" p={3} borderRadius={5}  border="none">
     <Typography variant="h6" color="gray" textAlign="center"> Join Class</Typography>
     <TextField id="outlined-basic" placeholder="Enter Class Code" variant="outlined" sx={{width:"100%",marginTop:"23px"}} onChange={(e)=>{
-    Set(e.target.value)}} />
+    setjoinclass(e.target.value)}} />
     <Button sx={{marginTop:"10px"}} onClick={handleJoinClass}> Submit</Button>
   </Box>
 </StyleModal>
