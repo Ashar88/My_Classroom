@@ -21,9 +21,33 @@ const [Session,SetSession]=useState(InitialSession)
 const[loginstate,setloginstate]=useState(false);
 
 const [issidebaropen,setissidebaropen]=useState(false);
+
+const [loading,setloading]=useState(false)
 const opensidebar=()=>{
     setissidebaropen(true);
 }
+
+const fetchData=async()=>{
+
+    try{
+setloading(true)
+    
+    
+    if(issidebaropen)
+    {
+      
+      
+    }
+    else{
+      
+    }
+      setloading(false)
+      
+
+    }catch(error)
+  {
+   
+  }  }
 const [isclasswork,setclasswork]=useState(false);
 const closedsidebar=()=>{
     setissidebaropen(false);

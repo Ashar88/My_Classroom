@@ -1,5 +1,6 @@
+
 use my_classroom;
-Drop procedure CreateTables;
+Drop procedure if exists CreateTables;
  
 DELIMITER ;;
 CREATE  DEFINER=`root`@`localhost` PROCEDURE `CreateTables`()
