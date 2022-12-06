@@ -1,17 +1,17 @@
 package com.ashar.MyClassroom.service.Assignment;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
+
+import com.ashar.MyClassroom.entity.Assignment;
 
 public interface AssignmentService {
 
-	void CreateClassroom(String username, Map<String, String> obj) throws SQLException;
 
-	void editClassroom(String username, Map<String, String> obj) throws SQLException;
-
-	void createPost(String username, String class_id, String title, String descript) throws SQLException;
-
-	void deleteClassroom(String username, String class_id, String string, String string2) throws SQLException;
-
+	List<Assignment> allAssignments(Map<String, String> obj);
+	boolean CreateAssignment(Map<String, String> obj) throws SQLException;
+	boolean editAssignment(Map<String, String> obj) throws SQLException;
+	boolean deleteAssignment(Map<String, String> obj);
 
 }

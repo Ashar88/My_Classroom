@@ -2,6 +2,7 @@ package com.ashar.MyClassroom.repository.Assignment;
 
 import java.sql.CallableStatement;
 import java.sql.SQLException;
+import java.sql.Types;
 
 import javax.sql.DataSource;
 
@@ -19,66 +20,71 @@ public class AssignmentRepository {
 	
 	
 	
-	public boolean CreateClassroom(String username, String name, String title, String code, String uniqueCode, String descript) throws SQLException
+	public boolean CreateAssignment(String teacherUsername, String class_id, String title, String totalMarks
+			, String due_date, String descript) throws SQLException
 	{
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-		callableStatement = jdbcTemplate.getDataSource().getConnection().prepareCall("{call CreateClassroom(?, ?, ?, ?, ?, ?)}");
-		callableStatement.setString(1, username);
-		callableStatement.setString(2, name);
-		callableStatement.setString(3, title);
-		callableStatement.setString(4, code);
-		callableStatement.setString(5, uniqueCode);
-		callableStatement.setString(6, descript);
-		
-		callableStatement.executeUpdate();
-		callableStatement.getConnection().close();
-		return true;
-	}
-	
-	
-	public boolean EditClassroom(String username, String name, String title, String code, String uniqueCode, String descript) throws SQLException
-	{
-		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-		callableStatement = jdbcTemplate.getDataSource().getConnection().prepareCall("{call EditClassroom(?, ?, ?, ?, ?, ?)}");
-		callableStatement.setString(1, username);
-		callableStatement.setString(2, name);
-		callableStatement.setString(3, title);
-		callableStatement.setString(4, code);
-		callableStatement.setString(5, uniqueCode);
-		callableStatement.setString(6, descript);
-		
-		callableStatement.executeUpdate();
-		callableStatement.getConnection().close();
-		return true;
-	}
-
-
-	public boolean createPost(String username, String class_id, String title, String descript) throws SQLException {
-	
-		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-		callableStatement = jdbcTemplate.getDataSource().getConnection().prepareCall("{call CreatePost(?, ?, ?, ?)}");
-		callableStatement.setString(1, username);
+		callableStatement = jdbcTemplate.getDataSource().getConnection().prepareCall("{call CreateAssignment(?, ?, ?, ?, ?, ?, ?)}");
+		callableStatement.setString(1, teacherUsername);
 		callableStatement.setString(2, class_id);
 		callableStatement.setString(3, title);
-		callableStatement.setString(4, descript);
+		callableStatement.setString(4, totalMarks);
+		callableStatement.setString(5, due_date);
+		callableStatement.setString(6, descript);
+		callableStatement.registerOutParameter(7, Types.BOOLEAN);
 		
 		callableStatement.executeUpdate();
+
+		boolean result = callableStatement.getBoolean(7);
 		callableStatement.getConnection().close();
-		return true;
+
+		return result;
 	}
+	
 
-
-	public boolean deleteClassroom(String username, String class_id, String title, String descript) throws SQLException {
+	
+	public boolean editAssignment(String assignment_id, String teacherUsername, String class_id, String title, String totalMarks
+			, String due_date, String descript) throws SQLException {
+		
+		
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-		callableStatement = jdbcTemplate.getDataSource().getConnection().prepareCall("{call DeleteClassroom(?, ?, ?, ?)}");
-		callableStatement.setString(1, username);
-		callableStatement.setString(2, class_id);
-		callableStatement.setString(3, title);
-		callableStatement.setString(4, descript);
+		callableStatement = jdbcTemplate.getDataSource().getConnection().prepareCall("{call EditAssignment(?, ?, ?, ?, ?, ?, ?, ?)}");
+		
+		callableStatement.setString(1, assignment_id);
+		callableStatement.setString(2, teacherUsername);
+		callableStatement.setString(3, class_id);
+		callableStatement.setString(4, title);
+		callableStatement.setString(5, totalMarks);
+		callableStatement.setString(6, due_date);
+		callableStatement.setString(7, descript);
+		callableStatement.registerOutParameter(8, Types.BOOLEAN);
 		
 		callableStatement.executeUpdate();
+
+		boolean result = callableStatement.getBoolean(8);
 		callableStatement.getConnection().close();
-		return true;
-		
+
+		return result;
 	}
+	
+	public boolean deletePost(String post_id, String teacherUsername) throws SQLException {
+
+		boolean result = false;
+
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		callableStatement = jdbcTemplate.getDataSource().getConnection().prepareCall("{call DeletePost(?, ?, ?)}");
+		callableStatement.setString(1, post_id);
+		callableStatement.setString(2, teacherUsername);
+		callableStatement.registerOutParameter(3, Types.BOOLEAN);
+
+		callableStatement.executeUpdate();
+		result = callableStatement.getBoolean(3);
+		callableStatement.getConnection().close();
+
+		return result;
+	}
+
+	
+	
+	
 }
