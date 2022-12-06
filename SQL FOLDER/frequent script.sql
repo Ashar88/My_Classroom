@@ -1,3 +1,4 @@
+
 use my_classroom;
 drop table if exists grade;
 drop table if exists  dfdafnment_submission; 
@@ -61,7 +62,7 @@ call DeletePost(2,"haider92", @var);
 
 
      -- incorrect data
-call CreatePost("Ashar", "3", "Introduction to Database", "this is our first post for this classroom");
+call CreatePost("Ashar", "3", "Introduction to Database", "this is our first post for this classroom",@var);
 
 
 call CreateAssignment("haider92", "2", "Assignment No:1",100, "2022/12/27","First Assignment here!!", @var);
