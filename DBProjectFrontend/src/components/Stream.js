@@ -7,7 +7,13 @@ import { Button } from '@mui/material';
 import {data,commentPerson} from './StreamData'
 import classdata from './classdata'
 import { useGlobalContext } from '../context';
+
+import axios from 'axios';
 import { useEffect } from 'react';
+
+import {viewAllPost} from  '../Service/postAPI';
+
+
 const Stream = () => {
 
     const {classid}=useGlobalContext();
@@ -28,9 +34,33 @@ const newarr=classdata.filter((curr)=>{
       
 
     }
-    useEffect(()=>{
-      filterclass();
-    },[])
+
+
+     useEffect(()=>{
+       filterclass();
+
+       
+
+        viewPost();
+        
+
+     },[])
+
+
+     const viewPost =async()=>{
+      const json = {
+          "class_id" : 2
+       }
+        var obj = await viewAllPost(json);
+        console.log(obj)
+
+
+          axios.post('/').then(response => {
+        console.log(response.data);
+        }).catch(error => {
+        console.log(error.response.data);
+        });
+     }
   return (
     <div><div class=" headerrr">
       <h1 class="elements"> {classarray}</h1>
