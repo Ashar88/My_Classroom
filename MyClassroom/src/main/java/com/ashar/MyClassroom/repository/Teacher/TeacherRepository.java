@@ -66,4 +66,19 @@ public class TeacherRepository {
 		callableStatement.getConnection().close();
 		return true;
 	}
+
+
+	public boolean deleteClassroom(String username, String class_id, String title, String descript) throws SQLException {
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		callableStatement = jdbcTemplate.getDataSource().getConnection().prepareCall("{call DeleteClassroom(?, ?, ?, ?)}");
+		callableStatement.setString(1, username);
+		callableStatement.setString(2, class_id);
+		callableStatement.setString(3, title);
+		callableStatement.setString(4, descript);
+		
+		callableStatement.executeUpdate();
+		callableStatement.getConnection().close();
+		return true;
+		
+	}
 }

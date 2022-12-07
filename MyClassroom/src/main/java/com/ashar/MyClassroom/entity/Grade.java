@@ -2,7 +2,7 @@ package com.ashar.MyClassroom.entity;
 
 public class Grade {
 
-	private int std_username;
+	private String std_username;
 
 	private int assign_id;
 	private String teacher_username;
@@ -10,7 +10,7 @@ public class Grade {
 
 	private float marks_obtained;
 
-	public Grade(int std_username, int assign_id, String teacher_username, int class_id, float marks_obtained) {
+	public Grade(String std_username, int assign_id, String teacher_username, int class_id, float marks_obtained) {
 		super();
 		this.std_username = std_username;
 		this.assign_id = assign_id;
@@ -24,11 +24,11 @@ public class Grade {
 		// TODO Auto-generated constructor stub
 	}
 
-	public int getStd_username() {
+	public String getStd_username() {
 		return std_username;
 	}
 
-	public void setStd_username(int std_username) {
+	public void setStd_username(String std_username) {
 		this.std_username = std_username;
 	}
 
@@ -54,6 +54,12 @@ public class Grade {
 
 	public void setClass_id(int class_id) {
 		this.class_id = class_id;
+	}
+
+	@Override
+	public String toString() {
+		return "Grade [std_username=" + std_username + ", assign_id=" + assign_id + ", teacher_username="
+				+ teacher_username + ", class_id=" + class_id + ", marks_obtained=" + marks_obtained + "]";
 	}
 
 	public float getMarks_obtained() {

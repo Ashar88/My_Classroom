@@ -8,6 +8,7 @@ public class Class {
 	private String Course_Code;
 	private String Unique_class_code;
 	private String description;
+	private String Date_created;
 	
     public Class() {
 		super();
@@ -68,6 +69,14 @@ public class Class {
 
 	public void setUnique_class_code(String unique_class_code) {
 		Unique_class_code = unique_class_code;
+	}
+
+	public String getDate_created() {
+		return Date_created;
+	}
+
+	public void setDate_created(String date_created) {
+		Date_created = date_created;
 	}
 	
 

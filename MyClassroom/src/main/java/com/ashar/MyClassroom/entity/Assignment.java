@@ -3,7 +3,6 @@ package com.ashar.MyClassroom.entity;
 public class Assignment {
 
 	private int a_id;
-
 	private String username;
 	private int class_id;
 	private String a_title;
@@ -11,6 +10,7 @@ public class Assignment {
 	private String Date_created;
 	private String due_date;
 	private String descript;
+	private String External_File;
 
 	public Assignment() {
 		super();
@@ -99,6 +99,14 @@ public class Assignment {
 
 	public void setDescript(String descript) {
 		this.descript = descript;
+	}
+
+	public String getExternal_File() {
+		return External_File;
+	}
+
+	public void setExternal_File(String external_File) {
+		External_File = external_File;
 	}
 
 }

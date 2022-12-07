@@ -11,5 +11,7 @@ public interface TeacherService {
 
 	void createPost(String username, String class_id, String title, String descript) throws SQLException;
 
+	void deleteClassroom(String username, String class_id, String string, String string2) throws SQLException;
+
 
 }

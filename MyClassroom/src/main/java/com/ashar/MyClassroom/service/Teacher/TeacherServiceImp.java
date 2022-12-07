@@ -34,6 +34,13 @@ public class TeacherServiceImp implements TeacherService {
 		TeacherRepo.createPost(username, class_id, title, descript);
 
 	}
+
+
+	@Override
+	public void deleteClassroom(String username, String class_id, String title, String descript) throws SQLException {
+	
+		TeacherRepo.deleteClassroom(username, class_id, title, descript);
+	}
 	
 
 }
