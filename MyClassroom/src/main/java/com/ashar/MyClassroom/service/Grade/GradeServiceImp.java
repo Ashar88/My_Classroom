@@ -1,46 +1,35 @@
 package com.ashar.MyClassroom.service.Grade;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.ashar.MyClassroom.repository.Teacher.TeacherRepository;
+import com.ashar.MyClassroom.entity.Grade;
+import com.ashar.MyClassroom.repository.Grade.GradeRepository;
 
 @Service
 public class GradeServiceImp implements GradeService {
 
 	@Autowired
-	private TeacherRepository TeacherRepo;
+	private GradeRepository GradeRepo;
 
 	
 	@Override
-	public void CreateClassroom(String username, Map<String, String> obj) throws SQLException {
-		TeacherRepo.CreateClassroom(username, obj.get("name"), obj.get("title")
-				, obj.get("code"), obj.get("unique_code"), obj.get("descript"));
+	public List<Grade> ViewGrade(Map<String, String> obj) throws SQLException {
+		return GradeRepo.ViewGrade(obj.get("assignment_id"), obj.get("stdUsername"));
 	}
 
 
 	@Override
-	public void editClassroom(String username, Map<String, String> obj) throws SQLException {
-		TeacherRepo.CreateClassroom(username, obj.get("name"), obj.get("title")
-				, obj.get("code"), obj.get("unique_code"), obj.get("descript"));
+	public boolean AssignGrade(Map<String, String> obj) throws SQLException {
+		
+		System.out.println(  obj.get("assignment_id")+ obj.get("std_username")+ obj.get("teacherUsername")
+				+ obj.get("MarksObt") );
+		
+		return GradeRepo.ViewGrade(obj.get("assignment_id"), obj.get("std_username"), obj.get("teacherUsername")
+				, obj.get("MarksObt"));
 	}
-
-
-	@Override
-	public void createPost(String username, String class_id, String title, String descript) throws SQLException {
-		TeacherRepo.createPost(username, class_id, title, descript);
-
-	}
-
-
-	@Override
-	public void deleteClassroom(String username, String class_id, String title, String descript) throws SQLException {
-	
-		TeacherRepo.deleteClassroom(username, class_id, title, descript);
-	}
-	
 
 }

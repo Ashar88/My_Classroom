@@ -1,4 +1,3 @@
-
 use my_classroom;
 drop table if exists grade;
 drop table if exists  dfdafnment_submission; 
@@ -14,6 +13,16 @@ drop table if exists  user;
 
 
 CALL `my_classroom`.`CreateTables`();
+
+SELECT * FROM grade;
+SELECT * FROM dfdafnment_submission;
+SELECT * FROM assignment;
+SELECT * FROM post_comment;
+SELECT * FROM post;
+SELECT * FROM student;
+SELECT * FROM class;
+SELECT * FROM teacher;
+SELECT * FROM user;
 
 
 insert into user values("Ashar88","Ashar","Saleem","fast123","asharsaleem55@gmail.com"
@@ -36,12 +45,21 @@ Call CreateClassroom("haider92","AP-Fall 22","DB CS2005","1254","1254", "databas
 Call CreateClassroom("Yousuf2","DB-Fall 22","DB CS2005","73","73","database class for section bse-5A",@var);
 Call CreateClassroom("faizan88","DB-Fall 22","DB CS2005","2743","2743" ,"database class for section bse-5A",@var);
 
+-- Call EditClassroom(4,"faizan88","(edited) DB-Fall 22","DB CS2005","2743","(edited)database class for section bse-5A",@var);
+
 -- Call DeleteClassroom(1,"Yousuf2", @var);
 
 Call JoinClassroom("Yousuf2","1254",@var);
 Call JoinClassroom("Ashar88","1254",@var);
 Call JoinClassroom("Ashar88","73",@var);
 Call JoinClassroom("Ashar88","2743",@var);
+
+
+Call AllClassroomsOfStudent("Ashar88");
+
+Call AllClassroomsOfTeacher("Ashar88");
+Call AllClassroomsOfTeacher("haider92");
+Call AllClassroomsOfTeacher("Yousuf2");
 
  -- ****************** First verified input**********************
  
@@ -62,7 +80,7 @@ call DeletePost(2,"haider92", @var);
 
 
      -- incorrect data
-call CreatePost("Ashar", "3", "Introduction to Database", "this is our first post for this classroom",@var);
+call CreatePost("Ashar", "3", "Introduction to Database", "this is our first post for this classroom", @var);
 
 
 call CreateAssignment("haider92", "2", "Assignment No:1",100, "2022/12/27","First Assignment here!!", @var);
@@ -86,25 +104,26 @@ call DeleteAssignment(2,"haider92", @var);
 
 call ViewAllPost("2");
 call AllStudents("2");
+call ViewAllAssignment("2");
 
-call CommentOnPost(1,null,"haider92","Hey guyz i have missed some details, will share it in some other post",@var); 
-call CommentOnPost(1,"Ashar88",null,"Alright teacher",@var); 
-call CommentOnPost(1,"Yousuf2",null,"Please share it quick, sir.",@var); 
+call CommentOnPost(4,null,"haider92","Hey guyz i have missed some details, will share it in some other post",@var); 
+call CommentOnPost(4,"Ashar88",null,"Alright teacher",@var); 
+call CommentOnPost(4,"Yousuf2",null,"Please share it quick, sir.",@var); 
 
 -- incorrect input
 call CommentOnPost(1,"Yousuf2","haider","Please share it quick, sir.",@var); 
 
--- call AllCommentsOnPost(1);
+ call AllCommentsOnPost(4);
 
 
-call AssignGrade(1,"Ashar88",59,@var);
-call AssignGrade(1,"Yousuf2",85,@var);
-call AssignGrade(1,"Yousuf2",25,@var);
+call AssignGrade(1,"Ashar88","haider92",59,@var);
+call AssignGrade(1,"Yousuf2","haider92",85,@var);
+call AssignGrade(1,"Yousuf2","haider92",25,@var);
 
-call AssignGrade(3,"Yousuf2",99,@var);
+call AssignGrade(3,"Yousuf2","haider92",99,@var);
 
-call AssignGrade(2,"Yousuf2012",99,@var);
-call AssignGrade(2,"Yousuf2",99,@var);
+call AssignGrade(2,"Yousuf2","haider92",99,@var);
+call AssignGrade(2,"Yousuf2","haider92",99,@var);
 
 
 

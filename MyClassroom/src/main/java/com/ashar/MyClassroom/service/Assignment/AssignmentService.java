@@ -8,10 +8,9 @@ import com.ashar.MyClassroom.entity.Assignment;
 
 public interface AssignmentService {
 
-
-	List<Assignment> allAssignments(Map<String, String> obj);
 	boolean CreateAssignment(Map<String, String> obj) throws SQLException;
 	boolean editAssignment(Map<String, String> obj) throws SQLException;
-	boolean deleteAssignment(Map<String, String> obj);
+	boolean deleteAssignment(Map<String, String> obj) throws SQLException;
+	List<Assignment> ViewAllAssignment(Map<String, String> obj) throws SQLException;
 
 }

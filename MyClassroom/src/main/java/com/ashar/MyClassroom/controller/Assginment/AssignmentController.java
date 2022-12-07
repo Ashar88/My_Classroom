@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,21 +18,22 @@ import com.ashar.MyClassroom.service.Assignment.AssignmentService;
 
 
 @RestController
+@CrossOrigin(origins = "*")
 public class AssignmentController {
 
 	@Autowired
 	private AssignmentService AssignmentService;
+	
+	@PostMapping("/ViewAllAssignment")
+	public List<Assignment> ViewAllAssignment (@RequestBody Map<String,String> obj ) throws SQLException {
+		return AssignmentService.ViewAllAssignment(obj);
+	}
 	
 	@PostMapping("/createAssignment")
 	public boolean CreateAssignment (@RequestBody Map<String,String> obj ) throws SQLException {
             return  AssignmentService.CreateAssignment(obj);
 
 	}
-	@GetMapping("/allAssignments")
-	public List<Assignment> allAssignments (@RequestBody Map<String,String> obj ) throws SQLException {
-	    	return AssignmentService.allAssignments(obj);
-	}
-	
 	@PutMapping("/editAssignment")
 	public boolean editAssignment (@RequestBody Map<String,String> obj ) throws SQLException {
 	    	return AssignmentService.editAssignment(obj);

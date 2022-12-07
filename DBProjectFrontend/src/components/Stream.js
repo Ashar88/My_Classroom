@@ -11,8 +11,6 @@ import { useGlobalContext } from '../context';
 import axios from 'axios';
 import { useEffect } from 'react';
 
-import {viewAllPost} from  '../Service/postAPI';
-
 
 const Stream = () => {
 
@@ -36,31 +34,88 @@ const newarr=classdata.filter((curr)=>{
     }
 
 
+
+    const handleApi = () => {
+      axios
+        .post("http://localhost:8086/createPost", {
+          "teacherUsername": "haider92",
+          "class_id": 2,
+          "title": "react lecture No:3",
+          "descript": "hello, Slides are attached below"
+        })
+        .then((result) => console.log(result.data))
+        .catch((err) => console.log(err));
+  
+    };
+
+
+
+    const handleApi3 = () => {
+     const ans =  axios
+        .put("http://localhost:8086/editPost", {
+          "post_id": 21,
+          "teacherUsername": "haider92",
+          "class_id": 2,
+          "title": "Null deliebrately",
+          "descript": "NULL deliebrately"
+        })
+        .then((result) => console.log(result.data))
+        .catch((err) => console.log(err));
+  
+        console.log(ans.data.data)
+    };
+
+    const handleApi4 = () => {
+      const ans = axios
+        .delete("http://localhost:8086/deletePost", {
+            data: {
+              "post_id": 1,
+              "teacherUsername": "haider92"
+          }
+        })
+        .then((result) => console.log(result.data))
+        .catch((error) => console.log( error.response.data.message) );
+  
+        console.log(ans.data)
+    };
+
+
+    const handleApi2 = () => {
+      axios
+        .get("http://localhost:8086/viewAllPost", {
+          params: {"class_id": 2}
+        })
+          .then((result) => console.log(result.data))
+          .catch((error) => console.log( error.response.data.message) );
+      
+    };
+
+
+        const handleApi8 = () => {
+      axios
+        .post("http://localhost:8086/viewAllPost_POST", {
+          "class_id": 2,
+        })
+        .then((result) => console.log(result.data))
+        .catch((err) => console.log(err));
+  
+    };
+
+
+
+
      useEffect(()=>{
-       filterclass();
+         filterclass();
 
-       
-
-        viewPost();
-        
-
+            //  handleApi();
+            //  handleApi2();
+            //  handleApi3();
+            //  handleApi4();
+             handleApi8();
      },[])
 
 
-     const viewPost =async()=>{
-      const json = {
-          "class_id" : 2
-       }
-        var obj = await viewAllPost(json);
-        console.log(obj)
 
-
-          axios.post('/').then(response => {
-        console.log(response.data);
-        }).catch(error => {
-        console.log(error.response.data);
-        });
-     }
   return (
     <div><div class=" headerrr">
       <h1 class="elements"> {classarray}</h1>

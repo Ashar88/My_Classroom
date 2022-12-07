@@ -1,6 +1,5 @@
-
 use my_classroom;
-Drop procedure if exists CreateTables;
+Drop procedure CreateTables;
  
 DELIMITER ;;
 CREATE  DEFINER=`root`@`localhost` PROCEDURE `CreateTables`()
@@ -51,7 +50,7 @@ Select "class";
 			username varchar(35),
 			class_name varchar(35) Not Null,
 			course_title varchar(35) Not Null,
-			Course_Code varchar(35) unique,
+			Course_Code varchar(35) Not Null,
             Unique_Class_code varchar(15) unique,
 			Date_created dateTime,
 			descript varchar(300),

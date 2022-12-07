@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ashar.MyClassroom.entity.Post;
@@ -18,7 +19,7 @@ import com.ashar.MyClassroom.service.Post.PostService;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class PostController {
 
 	@Autowired
@@ -46,23 +47,14 @@ public class PostController {
 		return Boolean.toString(result);
 
 	}
-
 	
-	@GetMapping("/viewAllPost")
+
+	@PostMapping("/viewAllPost")
 	public List<Post> viewAllPost (@RequestBody Map<String,String> obj ) throws SQLException {
+	
 		String classId = obj.get("class_id");
-		
-		System.out.println(classId);
 		return PostService.viewAllPost(classId);
 
 	}
 
-//	@PostMapping("/createPost")
-//	public String createPost (@PathVariable String username,@PathVariable String class_id
-//			, @RequestBody Map<String,String> obj ) throws SQLException {
-//
-//		  PostService.createPost(username, class_id,obj.get("title"), obj.get("descript"));
-//
-//			return null;
-//	}
 }

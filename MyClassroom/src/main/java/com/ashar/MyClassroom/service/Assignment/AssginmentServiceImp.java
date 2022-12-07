@@ -17,11 +17,6 @@ public class AssginmentServiceImp implements AssignmentService {
 	private AssignmentRepository AssignmentRepo;
 
 	@Override
-	public List<Assignment> allAssignments(Map<String, String> obj) {
-		return null;
-	}
-
-	@Override
 	public boolean CreateAssignment(Map<String, String> obj) throws SQLException {
 		
 		return AssignmentRepo.CreateAssignment(obj.get("teacherUsername"), obj.get("class_id"), obj.get("title"),
@@ -37,9 +32,13 @@ public class AssginmentServiceImp implements AssignmentService {
 	}
 
 	@Override
-	public boolean deleteAssignment(Map<String, String> obj) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean deleteAssignment(Map<String, String> obj) throws SQLException {
+		return AssignmentRepo.deleteAssignment(obj.get("assignment_id"), obj.get("teacherUsername"));
+	}
+
+	@Override
+	public List<Assignment> ViewAllAssignment(Map<String, String> obj) throws SQLException {
+		return AssignmentRepo.ViewAllAssignment(obj.get("class_id"));
 	}
 
 

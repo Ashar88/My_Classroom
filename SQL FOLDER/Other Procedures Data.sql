@@ -9,7 +9,7 @@ IN name varchar(50),
 IN title varchar(50),
 IN code varchar(50),
 IN unique_code varchar(50),
-IN descript varchar(50),
+IN descript varchar(150),
 OUT QueryResult Boolean
 )
 COMMENT 'Creating Classroom by the teacher'
@@ -67,8 +67,7 @@ IN TeacherUsername varchar(35),
 IN name varchar(50),
 IN title varchar(50),
 IN code varchar(50),
-IN unique_code varchar(50),
-IN descript varchar(50),
+IN descript varchar(150),
 OUT QueryResult Boolean
 )
 COMMENT 'Edit Classroom by the teacher'
@@ -106,7 +105,7 @@ sp: BEGIN
 	select 3 ;
 		UPDATE `my_classroom`.`class` SET 
 		`username` =  TeacherUsername, `class_name` = name, `course_title` = title
-        ,`Course_Code` = code,`Unique_Class_code` = unique_code, `descript` = Descript
+        ,`Course_Code` = code, `descript` = Descript
 		 WHERE `class_id` = class_id__;
 
     Set QueryResult = True;
@@ -315,6 +314,96 @@ DELIMITER ;
 
 
 
+Drop procedure if exists GetUniqueCodeOfClass;
+DELIMITER ;;
+CREATE  DEFINER=`root`@`localhost` PROCEDURE `GetUniqueCodeOfClass`(
+IN  class_id varchar(50),
+Out uniqueCode varchar(15)
+)
+COMMENT 'Get Unique Code Of the Class'
+sp: BEGIN
+		Set uniqueCode = "-1";
+        Select Unique_Class_code into uniqueCode from class where class.class_id =  class_id;
+    COMMIT;
+	END ;;
+DELIMITER ;
+
+
+
+
+
+
+
+
+Drop procedure if exists AllClassroomsOfTeacher;
+DELIMITER ;;
+CREATE  DEFINER=`root`@`localhost` PROCEDURE `AllClassroomsOfTeacher`(
+IN username varchar(35)
+)
+COMMENT 'Get All Classrooms Of the specified Teacher'
+sp: BEGIN
+     declare flag int;
+	 DECLARE exit handler for sqlexception
+	   BEGIN
+         select "error";
+	   ROLLBACK;
+	 END;
+	   
+	 DECLARE exit handler for sqlwarning
+	  BEGIN
+		 -- WARNING
+         select "warning";
+	  ROLLBACK;
+	 END;
+
+	START TRANSACTION;
+    SET FOREIGN_KEY_CHECKS=0;
+    
+                         -- logic here--
+	     Select c.* from class c join teacher t on t.username = c.username 
+         where t.username = username;
+      
+    COMMIT;
+	END ;;
+DELIMITER ;
+
+
+
+
+
+
+
+Drop procedure if exists AllClassroomsOfStudent;
+DELIMITER ;;
+CREATE  DEFINER=`root`@`localhost` PROCEDURE `AllClassroomsOfStudent`(
+IN username varchar(35)
+)
+COMMENT 'Get All Classrooms Of the specified Student'
+sp: BEGIN
+     declare flag int;
+	 DECLARE exit handler for sqlexception
+	   BEGIN
+         select "error";
+	   ROLLBACK;
+	 END;
+	   
+	 DECLARE exit handler for sqlwarning
+	  BEGIN
+		 -- WARNING
+         select "warning";
+	  ROLLBACK;
+	 END;
+
+	START TRANSACTION;
+    SET FOREIGN_KEY_CHECKS=0;
+    
+                         -- logic here--
+	     Select c.* from class c join student s on s.class_id  = c.class_id 
+         where s.username = username;
+      
+    COMMIT;
+	END ;;
+DELIMITER ;
 
 
 
@@ -733,6 +822,48 @@ DELIMITER ;
 
 
 
+Drop procedure if exists ViewAllAssignment;
+DELIMITER ;;
+CREATE  DEFINER=`root`@`localhost` PROCEDURE `ViewAllAssignment`(
+IN class_id varchar(50)
+)
+COMMENT 'All posts to be viewed in the classroom'
+sp: BEGIN
+     DECLARE flag int; DECLARE var_id int;
+	 DECLARE exit handler for sqlexception
+	   BEGIN
+		  select "error"
+	   ROLLBACK;
+	 END;
+	   
+	 DECLARE exit handler for sqlwarning
+	  BEGIN
+         select "warning"
+	  ROLLBACK;
+	 END;
+
+	START TRANSACTION;
+    SET FOREIGN_KEY_CHECKS=0;
+    
+                         -- Verification here--
+	-- select 1;
+		Select count(*) into flag from class where class.class_id = class_id;
+        if flag = 0 then
+			leave sp;
+		 end if;  set flag = 0;   -- for using it again select 2;      
+		
+                         -- logic here--
+                         
+          Select p.* from class c join assignment p on c.class_id = p.class_id 
+          where c.class_id = class_id order by p.Date_created desc;
+          
+    COMMIT;
+	END ;;
+DELIMITER ;
+
+
+
+
 
 Drop procedure if exists AllStudents;
 DELIMITER ;;
@@ -901,12 +1032,12 @@ sp: BEGIN
     SET FOREIGN_KEY_CHECKS=0;
     
                          -- Verification here--
-	select 1;
+	-- select 1;
 		Select count(*) into flag from post where post.post_id = post_id;
         if flag = 0 then
 			leave sp;
 		 end if;  set flag = 0;   -- for using it again	
-    select 2; 
+ --   select 2; 
     
                          -- logic here--
                          
@@ -928,13 +1059,14 @@ DELIMITER ;;
 CREATE  DEFINER=`root`@`localhost` PROCEDURE `AssignGrade`(
 IN assignment_id varchar(35),
 IN stdUsername varchar(35),
+IN teacherUsername varchar(35),
 IN MarksObt int,
 OUT QueryResult Boolean
 )
 COMMENT 'Assign Grade by the teacher to a specific Student'
 sp: BEGIN
      DECLARE flag int; DECLARE flag2 int;
-     DECLARE class_id__ int; Declare teacherUsername varchar(35);
+     DECLARE class_id__ int;
      
      DECLARE exit handler for sqlexception
 	   BEGIN
@@ -954,10 +1086,10 @@ sp: BEGIN
                          -- Verification here--
 	select 1;
     
-		Select count(*), c.class_id, c.username into flag, class_id__,teacherUsername
+		Select count(*), c.class_id into flag, class_id__
         from assignment assign join class c 
         on assign.class_id = c.class_id 
-        where a_id = assignment_id;    
+        where assign.a_id = assignment_id and c.username = teacherUsername;    
         
 		 if flag = 0 then
 			Set QueryResult = false;
@@ -1032,14 +1164,18 @@ sp: BEGIN
 	START TRANSACTION;
     SET FOREIGN_KEY_CHECKS=0;
     
-    select 1; 
+--    --  select 1; 
 		Select count(*) into flag from grade
         where assign_id = assignment_id and std_username = stdUsername;              
 		 if flag = 0 then
+         
+             	Select * from grade
+        where assign_id = assignment_id and std_username = stdUsername; 
+         
 			leave sp;
 		 end if;  set flag = 0;   -- for using it again
 
-	select 2;           
+	-- select 2;           
     	Select * from grade
         where assign_id = assignment_id and std_username = stdUsername;          
 	   
