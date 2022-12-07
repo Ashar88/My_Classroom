@@ -16,7 +16,7 @@ const Assignment = ({name,id}) => {
     
 
     <div>
-    <NavBarClass/>
+    
       <div class="flexxx">
     <div class="asg-sec">
         <h2 class="text-primary line1">Assignment1</h2>

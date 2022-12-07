@@ -4,7 +4,7 @@ import NavBarBox from './NavBarBox'
 import ColorGen from './ColorGen'
 import { useEffect } from 'react'
 
-const Box = ({id,name,teacher,section}) => {
+const Box = ({class_name,course_title,course_Code}) => {
    const { color, generateColor } 
             = ColorGen();
       
@@ -21,9 +21,9 @@ const Box = ({id,name,teacher,section}) => {
       backgroundColor: "#" + color 
     }}>
             <span class="dot"><i class="fa-solid fa-ellipsis-vertical"></i></span>
-          <h3>{name}</h3>
-          <h6>{section}</h6>
-          <p>{teacher}</p>
+          <h3>{class_name}</h3>
+          <h6>{course_title}</h6>
+          <p>{course_Code}</p>
         </div>
     </div>
     </div>

@@ -4,7 +4,7 @@ const data=[{
    
 },
 {
-    name:'ashar',
+    name:'Ashar88',
     password:'umer',
 }];
 export default data;
