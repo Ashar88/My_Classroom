@@ -10,12 +10,15 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
+
 import javax.sql.DataSource;
 import org.springframework.boot.CommandLineRunner;
 
 
 
 @SpringBootApplication
+@EnableEncryptableProperties
 public class MyClassroomApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {

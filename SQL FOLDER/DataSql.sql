@@ -20,12 +20,12 @@ call CommentOnPost(6,"Yousuf2",null,"Please share it quick, sir.");
 
 call AllCommentsOnPost(6);
 
-call AssignGrade(1,"Ashar88","haider92",59);
-call AssignGrade(1,"Yousuf2","haider92",85);
+call AssignGrade(1,"Ashar88",59);
+call AssignGrade(1,"Yousuf2",85);
 
 
-call AssignGrade(1,"Yousuf22","haider92",85);
-call AssignGrade(3,"Yousuf2","haider92",99);
+call AssignGrade(1,"Yousuf22",85);
+call AssignGrade(3,"Yousuf2",99);
 
 
-call ViewGrade(3,"Yousuf2");
+call ViewGrade(3,"Yousuf5");
