@@ -5,13 +5,12 @@ import java.util.Map;
 
 public interface UserService {
 
-	void CreateClassroom(String username, Map<String, String> obj) throws SQLException;
 
-	void editClassroom(String username, Map<String, String> obj) throws SQLException;
+	boolean RegisterUser(Map<String, String> obj) throws SQLException;
 
-	void createPost(String username, String class_id, String title, String descript) throws SQLException;
+	boolean DeleteUser(Map<String, String> obj)throws SQLException;
 
-	void deleteClassroom(String username, String class_id, String string, String string2) throws SQLException;
+	boolean ValidateUser(Map<String, String> obj)throws SQLException;
 
 
 }
