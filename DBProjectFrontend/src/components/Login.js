@@ -8,6 +8,11 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 const Login = () => {
 
+    const [person,setperson] = useState({ firstName: '', lastName: '' })
+
+
+
+
     const [name,setname]=useState('');
     const [password,setpassword]=useState('');
     const [validdata,setvaliddata]=useState(data)
@@ -26,7 +31,11 @@ const Login = () => {
             {
                 if(curr.password===password)
                 {
+                    //setperson({firstName:curr.name,lastName:curr.password})
                    SetSession({name:name,password:password});
+
+                    
+                   localStorage.setItem('user', name);
                    setloginstate(true);
                     nav('/home')
                     
@@ -53,12 +62,12 @@ const Login = () => {
  }}/>
  
 <label >Password:</label>
-<input type="text" placeholder="*********" value={password} onChange={(e)=>{
+<input type="password" placeholder="*********" value={password} onChange={(e)=>{
     setpassword(e.target.value)
 }}/>
 <button className="l" type='Submit'>Login</button>
-<a href="">Forgot your password?</a>
-<button className="g" ><FcGoogle/> Continue With Google</button>
+{/* <a href="">Forgot your password?</a>
+<button className="g" ><FcGoogle/> Continue With Google</button> */}
 <Link to='/signup' className='lia'>  <h4>Dont have account?</h4> start here</Link>
 </form>
  
