@@ -166,6 +166,194 @@ DELIMITER ;
 
 
 
+
+
+
+
+Drop procedure if exists RegisterUser;
+DELIMITER ;;
+
+CREATE  DEFINER=`root`@`localhost` PROCEDURE `RegisterUser`(
+IN username varchar(35),
+IN f_name varchar(50),
+IN l_name varchar(50),
+IN user_password varchar(50),
+IN email varchar(50),
+IN phone_no varchar(50),
+IN gender varchar(1),
+IN age int,
+OUT QueryResult Boolean
+)
+COMMENT 'Creating/Inserting Users after registration'
+sp: BEGIN
+     declare flag int;
+	 DECLARE exit handler for sqlexception
+	   BEGIN
+         select "error"; Set QueryResult = false;
+	   ROLLBACK;
+	 END;
+	   
+	 DECLARE exit handler for sqlwarning
+	  BEGIN
+		 -- WARNING
+         select "warning"; Set QueryResult = false;
+	  ROLLBACK;
+	 END;
+
+	START TRANSACTION;
+    SET FOREIGN_KEY_CHECKS=0;
+             
+                    -- user already exists
+		 Select count(*) into flag from user u 
+         where u.username = username;
+		 if flag != 0 then
+            Set QueryResult = false;
+			leave sp;
+		 end if;  set flag = 0;   -- for using it again
+
+					-- logic here
+		INSERT INTO `my_classroom`.`user` (`username`,`f_name`,`l_name`,`user_password`,`email`,
+	    `phone_no`,`gender`,`age`)
+       VALUES
+         (username,f_name,l_name,user_password,email,phone_no,gender,age);
+
+    Set QueryResult = True;
+       
+    COMMIT;
+	END ;;
+DELIMITER ;
+
+
+
+
+
+
+
+Drop procedure if exists ValidateUser;
+DELIMITER ;;
+
+CREATE  DEFINER=`root`@`localhost` PROCEDURE `ValidateUser`(
+IN username varchar(35),
+IN password varchar(50),
+OUT QueryResult Boolean
+)
+COMMENT 'Creating/Inserting Users after registration'
+sp: BEGIN
+     declare flag int;
+	 DECLARE exit handler for sqlexception
+	   BEGIN
+         select "error"; Set QueryResult = false;
+	   ROLLBACK;
+	 END;
+	   
+	 DECLARE exit handler for sqlwarning
+	  BEGIN
+		 -- WARNING
+         select "warning"; Set QueryResult = false;
+	  ROLLBACK;
+	 END;
+
+	START TRANSACTION;
+    SET FOREIGN_KEY_CHECKS=0;
+
+		 Select count(*) into flag from user u 
+         where u.username = username and u.user_password = password;
+		 if flag = 0 then
+            Set QueryResult = false;
+			leave sp;
+		 end if;  set flag = 0;   -- for using it again
+		
+    Set QueryResult = True;
+       
+    COMMIT;
+	END ;;
+DELIMITER ;
+
+
+
+
+
+
+
+Drop procedure if exists getThePasswordFromApi;
+DELIMITER ;;
+
+CREATE  DEFINER=`root`@`localhost` PROCEDURE `getThePasswordFromApi`(
+IN username varchar(100),
+OUT password__ varchar(100)
+)
+COMMENT 'Need the Password for encryption purpose'
+sp: BEGIN
+     declare flag int;
+	 DECLARE exit handler for sqlexception
+	   BEGIN
+         select "error";
+	   ROLLBACK;
+	 END;
+	   
+	 DECLARE exit handler for sqlwarning
+	  BEGIN
+		 -- WARNING
+         select "warning"; 
+	  ROLLBACK;
+	 END;
+
+	START TRANSACTION;
+    SET FOREIGN_KEY_CHECKS=0;
+
+      Set password__ = null;
+      Select user_password into password__ from user where user.username = username;
+       
+    COMMIT;
+	END ;;
+DELIMITER ;
+
+
+
+
+
+Drop procedure if exists DeleteUser;
+DELIMITER ;;
+
+CREATE  DEFINER=`root`@`localhost` PROCEDURE `DeleteUser`(
+IN username varchar(35),
+OUT QueryResult Boolean
+)
+COMMENT 'Deleting the Users'
+sp: BEGIN
+     declare flag int;
+	 DECLARE exit handler for sqlexception
+	   BEGIN
+         select "error"; Set QueryResult = false;
+	   ROLLBACK;
+	 END;
+	   
+	 DECLARE exit handler for sqlwarning
+	  BEGIN
+		 -- WARNING
+         select "warning"; Set QueryResult = false;
+	  ROLLBACK;
+	 END;
+
+	START TRANSACTION;
+    SET FOREIGN_KEY_CHECKS=0;
+    
+		Delete from user where user.username = username;
+    
+    Set QueryResult = True;
+       
+    COMMIT;
+	END ;;
+DELIMITER ;
+
+
+
+
+
+
+
+
+
 Drop procedure if exists IsTeacherOfaClass;
 DELIMITER ;;
 

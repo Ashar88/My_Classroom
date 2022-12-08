@@ -5,13 +5,11 @@ import java.util.Map;
 
 public interface TeacherService {
 
-	void CreateClassroom(String username, Map<String, String> obj) throws SQLException;
+	String GetTeacherUsernameFromClassId(Map<String, String> obj) throws SQLException;
 
-	void editClassroom(String username, Map<String, String> obj) throws SQLException;
+	boolean RemoveStudentFromClass(Map<String, String> obj) throws SQLException;
 
-	void createPost(String username, String class_id, String title, String descript) throws SQLException;
-
-	void deleteClassroom(String username, String class_id, String string, String string2) throws SQLException;
+	boolean IsTeacherOfaClass(Map<String, String> obj) throws SQLException;
 
 
 }
