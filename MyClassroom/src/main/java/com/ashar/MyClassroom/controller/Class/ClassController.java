@@ -48,7 +48,9 @@ public class ClassController {
 	
 	@PostMapping("/GetUniqueCodeOfClass")
 	public String GetUniqueCodeOfClass (@RequestBody Map<String,String> obj ) throws SQLException {
-            return  ClassService.GetUniqueCodeOfClass(obj);
+            String result =  ClassService.GetUniqueCodeOfClass(obj);
+            if(result.equals("-1")) return "false";
+            else return result;
 	}
 	
 	@PostMapping("/AllClassroomsOfTeacher")
