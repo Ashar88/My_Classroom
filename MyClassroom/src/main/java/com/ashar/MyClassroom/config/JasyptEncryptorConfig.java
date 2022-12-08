@@ -13,7 +13,7 @@ public class JasyptEncryptorConfig {
     public static StringEncryptor passwordEncryptor(){
         PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
         SimpleStringPBEConfig config = new SimpleStringPBEConfig();
-        config.setPassword("javatechie"); // encryptor's private key
+        config.setPassword("my_classroom"); // encryptor's private key
         config.setAlgorithm("PBEWithMD5AndDES");
         config.setKeyObtentionIterations("1000");
         config.setPoolSize("1");

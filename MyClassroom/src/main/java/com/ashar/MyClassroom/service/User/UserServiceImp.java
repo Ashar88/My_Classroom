@@ -41,7 +41,10 @@ public class UserServiceImp implements UserService {
 
 		String passwordEnrpyt = getThePasswordFromApi(obj.get("username"));
 		String passwordDecrpyt = null;
-		passwordDecrpyt = DecrptKey(passwordEnrpyt);			
+
+		System.out.println("passwordEnrpyt: " + passwordEnrpyt);
+		if(passwordEnrpyt!=null) 
+			  passwordDecrpyt = DecrptKey(passwordEnrpyt);			
 		
 		if(passwordDecrpyt!=null && passwordDecrpyt.equals( obj.get("password"))) {	
 			System.out.println("equals");
