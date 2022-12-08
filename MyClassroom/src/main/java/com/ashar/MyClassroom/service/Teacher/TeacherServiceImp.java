@@ -14,33 +14,21 @@ public class TeacherServiceImp implements TeacherService {
 	@Autowired
 	private TeacherRepository TeacherRepo;
 
+	@Override
+	public String GetTeacherUsernameFromClassId(Map<String, String> obj) throws SQLException {
+		return TeacherRepo.GetTeacherUsernameFromClassId(obj.get("class_id"));
+	}
+
 	
 	@Override
-	public void CreateClassroom(String username, Map<String, String> obj) throws SQLException {
-		TeacherRepo.CreateClassroom(username, obj.get("name"), obj.get("title")
-				, obj.get("code"), obj.get("unique_code"), obj.get("descript"));
+	public boolean RemoveStudentFromClass(Map<String, String> obj) throws SQLException {
+		 return TeacherRepo.RemoveStudentFromClass(obj.get("teacherUsername"), obj.get("class_id"), obj.get("stdUsername"));
 	}
 
 
 	@Override
-	public void editClassroom(String username, Map<String, String> obj) throws SQLException {
-		TeacherRepo.CreateClassroom(username, obj.get("name"), obj.get("title")
-				, obj.get("code"), obj.get("unique_code"), obj.get("descript"));
+	public boolean IsTeacherOfaClass(Map<String, String> obj) throws SQLException {
+		 return TeacherRepo.IsTeacherOfaClass(obj.get("class_id"), obj.get("TeacherUsername"));
 	}
-
-
-	@Override
-	public void createPost(String username, String class_id, String title, String descript) throws SQLException {
-		TeacherRepo.createPost(username, class_id, title, descript);
-
-	}
-
-
-	@Override
-	public void deleteClassroom(String username, String class_id, String title, String descript) throws SQLException {
-	
-		TeacherRepo.deleteClassroom(username, class_id, title, descript);
-	}
-	
 
 }
