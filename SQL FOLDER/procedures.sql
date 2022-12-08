@@ -23,18 +23,18 @@ BEGIN
 	START TRANSACTION;
 
 	Create table if not exists user (
-			  username varchar(35) primary key,
-			  f_name varchar(35),
+			  username varchar(100) primary key,
+			  f_name varchar(35) not Null,
 			  l_name varchar(35),
-			  user_password varchar(50),
-			  email varchar(35),
+			  user_password varchar(100) not NUll,
+			  email varchar(35) not NUll,
 			  phone_no varchar(15),
-			  gender varchar(1),               -- check it later
+			  gender varchar(1) not NUll,               -- check it later
 			  age int
 		   );
 		   
 		Create table if not exists Teacher (   -- needs updation 
-			username varchar(35),
+			username varchar(100),
             department varchar(35),
             designation varchar(35),
             education varchar(35),
@@ -47,7 +47,7 @@ BEGIN
 Select "class";
 		Create table if not exists Class (
 			class_id int AUTO_INCREMENT primary key,
-			username varchar(35),
+			username varchar(100),
 			class_name varchar(35) Not Null,
 			course_title varchar(35) Not Null,
 			Course_Code varchar(35) Not Null,
@@ -61,7 +61,7 @@ Select "class";
 
 Select "student";
 		Create table if not exists Student (  -- needs updation
-			username varchar(35),
+			username varchar(100),
 			class_id int,
 			Department varchar(35),
 			Date_joined dateTime,
@@ -100,7 +100,7 @@ Select "Post";
 
 
 		Create table if not exists Grade (
-			std_username varchar(35),         -- graded to which student
+			std_username varchar(100),         -- graded to which student
 			assign_id int,                    -- graded on which assignment
 			marks_obtained float,
 
@@ -117,8 +117,8 @@ Select "Post";
 			
 			comment_time datetime not null,
 			comment_text varchar(255) not null,
-			comment_by_std_username varchar(35) default null,    -- comment can be made either by teacher and student
-			comment_by_teacher_username varchar(35) default null,
+			comment_by_std_username varchar(100) default null,    -- comment can be made either by teacher and student
+			comment_by_teacher_username varchar(100) default null,
 
 
 			FOREIGN KEY (post_id) REFERENCES post(post_id),
@@ -130,7 +130,7 @@ Select "Post";
 		Create table if not exists Assignment_Submission (
 			
 			submission_id int auto_increment,
-            std_username varchar(35),         -- submission by student
+            std_username varchar(100),         -- submission by student
 			assign_id int,                     -- assignment of which class
             External_File LONGBLOB,
 			

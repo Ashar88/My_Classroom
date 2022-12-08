@@ -1,6 +1,5 @@
 use my_classroom;
 drop table if exists grade;
-drop table if exists  dfdafnment_submission; 
 drop table if exists Assignment_Submission;
 drop table if exists assignment;
 drop table if exists post_comment;
@@ -15,7 +14,6 @@ drop table if exists  user;
 CALL `my_classroom`.`CreateTables`();
 
 SELECT * FROM grade;
-SELECT * FROM dfdafnment_submission;
 SELECT * FROM assignment;
 SELECT * FROM post_comment;
 SELECT * FROM post;
@@ -23,6 +21,8 @@ SELECT * FROM student;
 SELECT * FROM class;
 SELECT * FROM teacher;
 SELECT * FROM user;
+
+
 
 
 insert into user values("Ashar88","Ashar","Saleem","fast123","asharsaleem55@gmail.com"
@@ -33,7 +33,15 @@ insert into user values("haider92","haider","Neutral","neutrality","haider@gmail
                         ,"03328937577","M","24");
 insert into user values("Yousuf2","Yousuf","sharif","fast1234","yousuf@gmail.com"
                         ,"03312345678","M","20");
-                        
+
+call RegisterUser("Umer15","Umer","Hussain","Reactfast1234","Umer@gmail.com"
+                        ,"03312789678","M","22",@var);                     
+
+-- call DeleteUser("Umer15",@var);
+-- call DeleteUser("Yousuf2",@var);
+
+ call ValidateUser("Umer15", "Reactfast1234", @result);
+ select @result;
                         
 Call CreateClassroom("Yousuf2","DB-Fall 22","DB CS2005","890073","890073", "database class for section bse-5A",@var);
 Call CreateClassroom("haider92","AP-Fall 22","DB CS2005","1254","1254", "database class for section bse-5A",@var);
