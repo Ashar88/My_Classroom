@@ -9,11 +9,15 @@ import { Link } from 'react-router-dom'
 import './Box.css'
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import Loader from './Loader';
 
 const Home2 = () => {
+    const[load,setload]=useState(false)
     const [stddata,setstddata]=useState([]);
     const[teacherdata,setteacherdata]=useState([])
-     const{navbarb,setnavbarb,setclassid,classid,Session}=useGlobalContext();
+     const{navbarb,setnavbarb,setclassid,classid}=useGlobalContext();
+     const stringifiedPerson = localStorage.getItem('user');
+     const [Session,SetSession]=useState(stringifiedPerson)
      const nav=useNavigate();
      const handleClick=(courseid)=>{
 
@@ -23,35 +27,41 @@ const Home2 = () => {
         
 
      }
+     const [date,setdate]=useState(false);
 
      const FetchClassOfStudent =  () => {
+      setload(true);
      axios
       .post("http://localhost:8086/AllClassroomsOfStudent", {
         //class_id: id,
-
-        "username":Session.name,
+        
+        "username":Session,
       })
 
       .then((result) => {
+        console.log(Session)
         //console.log(result.data)
 
         setstddata(result.data);
+        setload(false);
       })
 
       .catch((err) => console.log(err));
   };
    const FetchClassOfTeacher =  () => {
+    setload(true);
      axios
       .post("http://localhost:8086/AllClassroomsOfTeacher", {
         //class_id: id,
 
-        "username":Session.name,
+        "username":Session,
       })
 
       .then((result) => {
        // console.log(result.data)
-
+console.log(Session)
         setteacherdata(result.data);
+        setload(false);
       })
 
       .catch((err) => console.log(err));
@@ -60,13 +70,18 @@ const Home2 = () => {
   useEffect(()=>{
     FetchClassOfStudent();
     FetchClassOfTeacher();
-  },[])
+    // console.log(date+"1");
+  },[date])
 
+  if(load)
+  {
+   return <Loader/> 
+  }
   return (
     
     <div>
     
-    <NavBarBox/>
+    <NavBarBox setdate={setdate} date={date}/>
     
     <div class="main1">
     {

@@ -25,8 +25,8 @@ const StyleModal = styled(Modal)({
 });
 const Stream = () => {
   const options = ["Edit", "Delete"];
-  const { classid, isteacher, setisteacher,Session } = useGlobalContext();
-
+  const { classid, isteacher, setisteacher } = useGlobalContext();
+    const Session=localStorage.getItem('user')
   const post=[{}];
   // const classid = 1;
 
@@ -36,6 +36,7 @@ const Stream = () => {
   const [classarray, setclassarray] = useState([]);
   const [editopen,seteditopen]=useState(false)
   const [postdata, setpostdata] = useState([]);
+  const [date, setDate] = useState()
 
   const [postid, setpostid] = useState([]);
   const { id } = useParams();
@@ -116,14 +117,14 @@ const [render,setrender]=useState("")
   const CreatePostAPI=  () => {
      axios
       .post("http://localhost:8086/createPost", {
-		"teacherUsername": Session.name,
+		"teacherUsername": Session,
 		"class_id": id,
 		"title": announcement,
 		"descript": announcement
 	})
 
       .then((result) => {
-
+        setDate(result.data)
         console.log(result.data)
        
       })
@@ -148,6 +149,46 @@ const [render,setrender]=useState("")
       .catch((err) => console.log(err));
   };
 
+  const handleEditAPI=(post_id)=>{
+
+    EditPostAPI(post_id)
+    seteditopen(false)
+  }
+  const EditPostAPI =  (postId) => {
+     axios
+      .put("http://localhost:8086/editPost", {
+        "post_id": postId,
+	      "teacherUsername": Session.name,
+	      "class_id": id,
+	      "title": editclasstitle,
+	      "descript": editclassDes
+      })
+
+      .then((result) => {
+
+      console.log(result.data);
+        
+      })
+
+      .catch((err) => console.log(err));
+  };
+
+  const DeletePostAPI =  (postId) => {
+     axios
+      .delete("http://localhost:8086/deletePost", {
+        "post_id": postId,
+	      "teacherUsername": Session.name,
+	      
+      })
+
+      .then((result) => {
+
+      console.log(result.data);
+        
+      })
+
+      .catch((err) => console.log(err));
+  };
   const fetchPostid = async () => {
     const newarr = await classarray.map((curr) => {
       return curr.post_id;
@@ -164,8 +205,9 @@ const [render,setrender]=useState("")
 
       .then((result) => {
         const vara=result.data
-        setpostdata(result.data);
-        console.log(postdata);
+
+        
+      return result.data;
       })
       .catch((err) => console.log(err));
   };
@@ -188,8 +230,8 @@ const [render,setrender]=useState("")
 
     // filterclass();
     handleViewPost();
-    //handleViewComment()
-    fetchPostid();
+   // handleViewComment()
+    //fetchPostid();
 
     if(isteacher)
     {
@@ -198,7 +240,7 @@ const [render,setrender]=useState("")
     //handleApi8();
     //console.log(classarray)
     //viewPost();
-  }, []);
+  }, [date]);
 
   
 
@@ -215,6 +257,7 @@ const [render,setrender]=useState("")
   //     console.log(error.response.data);
   //     });
   //  }
+  
   const ITEM_HEIGHT = 20;
   return (
     <div>

@@ -8,22 +8,23 @@ import { Button, Modal, styled, TextField } from "@mui/material";
 import { Box, Typography } from "@mui/material";
 import { Style } from "@mui/icons-material";
 import { ButtonUnstyled } from "@mui/base";
+import { useEffect } from "react";
 
 const StyleModal = styled(Modal)({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
 });
-const NavBarBox = () => {
+const NavBarBox = ({setdate,date}) => {
   const [open, setopen] = useState(false);
   const [openCreateClass, SetOpenCreateClass] = useState(false);
-  const { setissidebaropen, issidebaropen,Session } = useGlobalContext();
+  const { setissidebaropen, issidebaropen} = useGlobalContext();
   const [joinclasscode, setjoinclass] = useState("");
   const [createClassname, SetcreateClassname] = useState("");
   const [createCode, SetcreateCode] = useState("");
   const [createDes, SetcreateDes] = useState("");
   const [createClassTitle, SetcreateClassTitle] = useState("");
-
+  const Session=localStorage.getItem('user')
   const handleCreateClass = () => {
 
     /* console.log(createClassname,createCode,createDes,createClassTitle);*/
@@ -34,7 +35,7 @@ const NavBarBox = () => {
   const CreateClassAPI = (Classname,title,code,des) => {
     axios
       .post("http://localhost:8086/CreateClassroom", {
-        "TeacherUsername": Session.name,
+        "TeacherUsername": Session,
 		 "name": Classname,
 		 "title":title,
 	   "code": code,
@@ -50,17 +51,18 @@ const NavBarBox = () => {
       .catch((err) => console.log(err));
   };
 
+  
   const JoinClassAPI = () => {
     axios
       .post("http://localhost:8086/JoinClassroom", {
-		"stdUsername": Session.name,
+		"stdUsername": Session,
 		 "unique_class_code":joinclasscode
 	})
 
       .then((result) => {
         
-        
-        console.log(result.data);
+        setdate(!date)
+        console.log(date+"ss");
       })
       .catch((err) => console.log(err));
   };

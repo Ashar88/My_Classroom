@@ -8,12 +8,11 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 const Login = () => {
 
-    const person = { firstName: 'Robin', lastName: 'Wieruch' };
+    const [person,setperson] = useState({ firstName: '', lastName: '' })
 
-localStorage.setItem('user', JSON.stringify(person));
 
-const stringifiedPerson = localStorage.getItem('user');
-const personAsObjectAgain = JSON.parse(stringifiedPerson);
+
+
     const [name,setname]=useState('');
     const [password,setpassword]=useState('');
     const [validdata,setvaliddata]=useState(data)
@@ -32,7 +31,11 @@ const personAsObjectAgain = JSON.parse(stringifiedPerson);
             {
                 if(curr.password===password)
                 {
+                    //setperson({firstName:curr.name,lastName:curr.password})
                    SetSession({name:name,password:password});
+
+                    
+                   localStorage.setItem('user', name);
                    setloginstate(true);
                     nav('/home')
                     
@@ -63,8 +66,8 @@ const personAsObjectAgain = JSON.parse(stringifiedPerson);
     setpassword(e.target.value)
 }}/>
 <button className="l" type='Submit'>Login</button>
-<a href="">Forgot your password?</a>
-<button className="g" ><FcGoogle/> Continue With Google</button>
+{/* <a href="">Forgot your password?</a>
+<button className="g" ><FcGoogle/> Continue With Google</button> */}
 <Link to='/signup' className='lia'>  <h4>Dont have account?</h4> start here</Link>
 </form>
  
