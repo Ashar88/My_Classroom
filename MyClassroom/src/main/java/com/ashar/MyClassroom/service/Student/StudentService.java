@@ -10,5 +10,7 @@ public interface StudentService {
 
 	List<Student> AllStudents(Map<String, String> obj);
 
+	boolean IsStudentOfaClass(Map<String, String> obj) throws SQLException;
+
 
 }

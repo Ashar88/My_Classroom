@@ -26,5 +26,9 @@ public class StudentController {
             return  StudentService.AllStudents(obj);
 	}
 
+	@PostMapping("/IsStudentOfaClass")
+	public boolean IsStudentOfaClass (@RequestBody Map<String,String> obj ) throws SQLException {
+            return  StudentService.IsStudentOfaClass(obj);
+	}
 
 }

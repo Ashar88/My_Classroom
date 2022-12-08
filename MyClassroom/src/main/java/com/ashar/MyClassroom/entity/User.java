@@ -2,34 +2,35 @@ package com.ashar.MyClassroom.entity;
 
 public class User {
 	
+	private String username;
 	private String f_name;
 	private String l_name;
 	private String email;
 	private String password;
+
 	private String phone_no;
-	private char gender;
+	private String  gender;
 	private int age;
 
 	public User() {
 		
 	}
 	
-	public User(String f_name, String l_name, String email, String password, String phone_no, char gender, int age) {
+	public User(String username, String f_name, String l_name, String email, String phone_no, String  gender, int age) {
 		super();
+		this.username = username;
 		this.f_name = f_name;
 		this.l_name = l_name;
 		this.email = email;
-		this.password = password;
 		this.phone_no = phone_no;
 		this.gender = gender;
 		this.age = age;
 	}
-		
 
 	@Override
 	public String toString() {
-		return "User [f_name=" + f_name + ", l_name=" + l_name + ", email=" + email + ", phone_no=" + phone_no
-				+ ", gender=" + gender + ", age=" + age + "]";
+		return "User [username=" + username + ", f_name=" + f_name + ", l_name=" + l_name + ", email=" + email
+				+ ", phone_no=" + phone_no + ", gender=" + gender + ", age=" + age + "]";
 	}
 
 	@SuppressWarnings("unused")
@@ -66,10 +67,10 @@ public class User {
 	public void setPhone_no(String phone_no) {
 		this.phone_no = phone_no;
 	}
-	public char getGender() {
+	public String  getGender() {
 		return gender;
 	}
-	public void setGender(char gender) {
+	public void setGender(String  gender) {
 		this.gender = gender;
 	}
 	public int getAge() {
@@ -77,6 +78,14 @@ public class User {
 	}
 	public void setAge(int age) {
 		this.age = age;
+	}
+	
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 }

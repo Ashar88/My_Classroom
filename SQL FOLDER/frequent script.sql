@@ -112,6 +112,8 @@ call DeleteAssignment(2,"haider92", @var);
 
 call ViewAllPost("2");
 call AllStudents("2");
+
+call GetStudentData("Ashar88");
 call ViewAllAssignment("2");
 
 call CommentOnPost(4,null,"haider92","Hey guyz i have missed some details, will share it in some other post",@var); 

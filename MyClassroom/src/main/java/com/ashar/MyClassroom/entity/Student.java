@@ -9,7 +9,7 @@ public class Student extends User {
 		super();
 	}
 
-	public Student(String f_name, String l_name, String email, String password, String phone_no, char gender, int age) {
+	public Student(String f_name, String l_name, String email, String password, String phone_no, String gender, int age) {
 		super(f_name, l_name, email, password, phone_no, gender, age);
 		// TODO Auto-generated constructor stub
 	}
@@ -22,7 +22,7 @@ public class Student extends User {
 
 	@Override
 	public String toString() {
-		return "Student [Department=" + Department + ", DateJoined=" + DateJoined + "]";
+		return super.toString() + "Student [Department=" + Department + ", DateJoined=" + DateJoined + "]";
 	}
 
 	public String getDepartment() {

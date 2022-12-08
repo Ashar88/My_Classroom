@@ -18,7 +18,13 @@ public class StudentServiceImp implements StudentService {
 
 	@Override
 	public List<Student> AllStudents(Map<String, String> obj) {
-            return  null;
+		return StudentRepo.AllStudents(obj.get("class_id"));
+	}
+
+	
+	@Override
+	public boolean IsStudentOfaClass(Map<String, String> obj) throws SQLException {
+		return StudentRepo.IsStudentOfaClass(obj.get("class_id"), obj.get("stdUsername"));
 	}
 
 //	@Override
