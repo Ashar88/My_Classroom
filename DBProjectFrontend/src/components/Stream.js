@@ -5,7 +5,8 @@ import SendIcon from "@mui/icons-material/Send";
 
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import "./Style.css";
-import { Button, IconButton, Menu, MenuItem } from "@mui/material";
+import { Button, IconButton, Menu, MenuItem, Modal, TextField, Typography } from "@mui/material";
+import {  styled } from "@mui/material";
 import { data, commentPerson } from "./StreamData";
 import classdata from "./classdata";
 import { useGlobalContext } from "../context";
@@ -16,17 +17,24 @@ import { useEffect } from "react";
 import { viewAllPost } from "../Service/postAPI";
 import { useParams } from "react-router-dom";
 import NavBarClass from "./NavBarClass";
-
+import { Box } from "@mui/system";
+const StyleModal = styled(Modal)({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+});
 const Stream = () => {
   const options = ["Edit", "Delete"];
-  const { classid, isteacher, setisteacher } = useGlobalContext();
+  const { classid, isteacher, setisteacher,Session } = useGlobalContext();
 
   const post=[{}];
   // const classid = 1;
+
+  const[announcement,setannoucement]=useState("")
   const [data1, setdata1] = useState(data);
   const [classdata1, setclassdata1] = useState(classdata);
   const [classarray, setclassarray] = useState([]);
-
+  const [editopen,seteditopen]=useState(false)
   const [postdata, setpostdata] = useState([]);
 
   const [postid, setpostid] = useState([]);
@@ -34,24 +42,96 @@ const Stream = () => {
 
   const [isopen, setisopen] = useState(false);
 
+
+  const[editclassname,seteditclassname]=useState("");
+  const[editclasstitle,seteditclasstitle]=useState("");
+  const[editclasscode,seteditclasscode]=useState("");
+  const[editclassDes,seteditclassDes]=useState("");
+const [uniquecode,setuniquecode]=useState("");
+
+const [render,setrender]=useState("")
+  const handleEdit=()=>{
+
+    seteditopen(false)
+  }
   const handleclose = () => {
     setisopen(false);
   };
-  const handleEdit = () => {
-    setisopen(false);
-  };
+  
   const handleDelete = () => {
+
+    DeleteClassApi();
     setisopen(false);
   };
 
-  const handleApi8 = () => {
+  
+
+  const EditClassApi = () => {
     axios
-      .post("http://localhost:8086/viewAllPost", {
-        class_id: 2,
-      })
+      .put("http://localhost:8086/EditClassroom", {
+		"class_id": id,
+		"TeacherUsername": Session.name,
+		 "name":editclassname,
+		 "title":editclasstitle,
+	   "code": editclasscode,
+		 "descript":editclassDes
+	})
       .then((result) => console.log(result.data))
       .catch((err) => console.log(err));
   };
+
+  const DeleteClassApi = () => {
+    axios
+      .delete("http://localhost:8086/DeleteClassroom", {
+		"class_id": id,
+		"TeacherUsername": Session.name
+	})
+      .then((result) => console.log(result.data))
+      .catch((err) => console.log(err));
+  };
+
+  // const handleApi8 = () => {
+  //   axios
+  //     .post("http://localhost:8086/viewAllPost", {
+  //       class_id: 2,
+  //     })
+  //     .then((result) => console.log(result.data))
+  //     .catch((err) => console.log(err));
+  // };
+
+  const UniqueCodeAPI=  () => {
+     axios
+      .post("http://localhost:8086/GetUniqueCodeOfClass", {
+        class_id: id,
+      })
+
+      .then((result) => {
+
+
+        setuniquecode(result.data)
+      })
+
+      .catch((err) => console.log(err));
+  };
+  const CreatePostAPI=  () => {
+     axios
+      .post("http://localhost:8086/createPost", {
+		"teacherUsername": Session.name,
+		"class_id": id,
+		"title": announcement,
+		"descript": announcement
+	})
+
+      .then((result) => {
+
+        console.log(result.data)
+       
+      })
+
+      .catch((err) => console.log(err));
+  };
+
+
 
   const handleViewPost = async () => {
     await axios
@@ -90,6 +170,7 @@ const Stream = () => {
       .catch((err) => console.log(err));
   };
 
+
   useEffect(() => {
     //        const filterclass=async ()=>{
 
@@ -109,10 +190,17 @@ const Stream = () => {
     handleViewPost();
     //handleViewComment()
     fetchPostid();
+
+    if(isteacher)
+    {
+      UniqueCodeAPI();
+    }
     //handleApi8();
     //console.log(classarray)
     //viewPost();
   }, []);
+
+  
 
   //  const viewPost =async()=>{
   //   const json = {
@@ -155,7 +243,84 @@ const Stream = () => {
                 horizontal: "left",
               }}
             >
-              <MenuItem onClick={handleEdit}>Edit</MenuItem>
+              <MenuItem onClick={(e) => {
+                  seteditopen(true);
+                }}>Edit
+                </MenuItem>
+                <StyleModal
+              open={editopen}
+              onClose={(e) => {
+                seteditopen(false);
+              }}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box
+                width={400}
+                height={600}
+                bgcolor="white"
+                p={3}
+                borderRadius={5}
+                border="none"
+              >
+                <Typography variant="h6" color="gray" textAlign="center">
+                  {" "}
+                  Class Name
+                </Typography>
+                <TextField
+                  id="outlined-basic"
+                  placeholder="Enter Class Name"
+                  variant="outlined"
+                  sx={{ width: "100%", marginTop: "23px" }}
+                  onChange={(e) => {
+                    seteditclassname(e.target.value);
+                  }}
+                />
+                <Typography variant="h6" color="gray" textAlign="center">
+                  {" "}
+                 Class Title
+                </Typography>
+                <TextField
+                  id="outlined-basic"
+                  placeholder="Enter Class Title"
+                  variant="outlined"
+                  sx={{ width: "100%", marginTop: "23px" }}
+                  onChange={(e) => {
+                    seteditclasstitle(e.target.value);
+                  }}
+                />
+                <Typography variant="h6" color="gray" textAlign="center">
+                  {" "}
+                  Class Code
+                </Typography>
+                <TextField
+                  id="outlined-basic"
+                  placeholder="Enter Class Code"
+                  variant="outlined"
+                  sx={{ width: "100%", marginTop: "23px" }}
+                  onChange={(e) => {
+                    seteditclasscode(e.target.value);
+                  }}
+                />
+                <Typography variant="h6" color="gray" textAlign="center">
+                  {" "}
+                  Class Description
+                </Typography>
+                <TextField
+                  id="outlined-basic"
+                  placeholder="Enter Class Description"
+                  variant="outlined"
+                  sx={{ width: "100%", marginTop: "23px" }}
+                  onChange={(e) => {
+                    seteditclassDes(e.target.value);
+                  }}
+                />
+                <Button sx={{ marginTop: "10px" }} onClick={handleEdit}>
+                  {" "}
+                  Submit
+                </Button>
+              </Box>
+            </StyleModal>
               <MenuItem onClick={handleDelete}>Delete</MenuItem>
             </Menu>{" "}
           </div>
@@ -164,10 +329,10 @@ const Stream = () => {
         <h3 class="elements">{classarray?.section} </h3>
       </div>
       <div class="flex">
-        <div class="upcoming">
-          <h3 class="a">Upcomming</h3>
-          <p>wohoo! no work due soon!</p>
-        </div>
+       {isteacher && (<div class="upcoming">
+          <h3 class="a">Class Code</h3>
+          <p>{uniquecode}</p>
+        </div>)} 
         <div className="posts">
           {isteacher && (
             <div class="announcement">
@@ -178,11 +343,16 @@ const Stream = () => {
                   className="in"
                   type="text"
                   placeholder="Announce something to your class"
+
+                  onChange={(e)=>{
+    setannoucement(e.target.value)}}
                 />
                 <Button
                   sx={{ backgroundColor: "#75c9b7", ml: "-20px", mr: "7px" }}
                   variant="contained"
                   endIcon={<SendIcon />}
+                  onClick={()=>{CreatePostAPI()
+                  setrender("a")}}
                 >
                   Post
                 </Button>

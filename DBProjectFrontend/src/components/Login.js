@@ -8,6 +8,12 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 const Login = () => {
 
+    const person = { firstName: 'Robin', lastName: 'Wieruch' };
+
+localStorage.setItem('user', JSON.stringify(person));
+
+const stringifiedPerson = localStorage.getItem('user');
+const personAsObjectAgain = JSON.parse(stringifiedPerson);
     const [name,setname]=useState('');
     const [password,setpassword]=useState('');
     const [validdata,setvaliddata]=useState(data)

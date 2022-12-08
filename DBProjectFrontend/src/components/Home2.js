@@ -33,7 +33,7 @@ const Home2 = () => {
       })
 
       .then((result) => {
-        console.log(result.data)
+        //console.log(result.data)
 
         setstddata(result.data);
       })
@@ -49,7 +49,7 @@ const Home2 = () => {
       })
 
       .then((result) => {
-        console.log(result.data)
+       // console.log(result.data)
 
         setteacherdata(result.data);
       })

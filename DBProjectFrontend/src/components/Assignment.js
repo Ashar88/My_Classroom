@@ -2,7 +2,9 @@ import { PhotoCamera } from '@mui/icons-material';
 import { Button, IconButton } from '@mui/material';
 import React, { useState } from 'react'
 import UploadButton from './UploadButton'
+import { useParams } from 'react-router-dom';
 import './ass.css'
+import { useLocation } from 'react-router-dom';
 import data from './assignmentData'
 import NavBarClass from './NavBarClass';
 import { useEffect } from 'react';
@@ -10,7 +12,10 @@ import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 const Assignment = ({name,id}) => {
     const [upload,setupload]=useState(true);
     const[comment,setcomment]=useState("");
-
+    
+  const location=useLocation();
+  const {from}=location.state
+  console.log(from);
     
   return (
     
@@ -21,18 +26,18 @@ const Assignment = ({name,id}) => {
     <div class="asg-sec">
         <h2 class="text-primary line1">Assignment1</h2>
         <div class="td">
-            <span>Teacher name</span>
-            <span>.Date</span>
+            <span>{from.username}</span><br />
+            <span>{from.date_created}</span>
          </div>
      
          <div class="pd">
-             <span>100 points</span>
-             <span>.Due date</span>
+             <span><b>Marks:</b>{from.total_marks}</span><br />
+             <span> <b>Due Date</b> {from.due_date}</span>
          </div>
  
          <div class="assignment">
             <div class="box"> 
-           <span class="name">Assignment PDF</span>
+           <span class="name">{from.descript}</span>
            </div>
            </div>
 
