@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import axios from "axios";
 import './people.css';
 import SendIcon from '@mui/icons-material/Send';
  import { useGlobalContext } from '../context';
@@ -8,12 +9,14 @@ import NavBarClass from './NavBarClass';
 import dataa from './StudentData';
 import { useParams } from 'react-router-dom';
 const People = () => {
-const [data,setdata]=useState(dataa)
+const [data,setdata]=useState([])
 const [teachers,setteachers]=useState("");
 const [isLoading,setLoading]=useState(false);
 const [isopen,setisopen]=useState(false)
- const {classid,isteacher,setisteacher}=useGlobalContext();
-console.log(teachers);
+ 
+const[isteacher,setisteacher]=useState(false)
+
+const Session = localStorage.getItem("user");
 const {id}=useParams();
 console.log(id);
  const handleclose=()=>{
@@ -22,10 +25,70 @@ console.log(id);
     const handleEdit=()=>{
       setisopen(false)
     }
-     const handleDelete=()=>{
+     const handleDelete=(stdname)=>{
+      RemoveStudent(stdname)
       setisopen(false)
     }
 
+    const IsteacherOfclassAPI = () => {
+    axios
+      .post("http://localhost:8086/IsTeacherOfaClass", {
+        class_id: id,
+        TeacherUsername: Session,
+      })
+
+      .then((result) => {
+        setisteacher(result.data);
+      })
+    }
+
+    const GetAllStudentAPI = () => {
+    axios
+      .post("http://localhost:8086/AllStudents", {
+		"class_id": id
+	})
+
+      .then((result) => {
+         console.log(result.data);
+         setdata(result.data)
+        
+      })
+
+      .catch((err) => console.log(err));
+  };
+
+  const GetteacherofClass=()=>{
+    axios
+      .post("http://localhost:8086/GetTeacherUsernameFromClassId", {
+		"class_id": id
+	})
+
+      .then((result) => {
+         console.log(result.data);
+         setteachers(result.data)
+        
+      })
+
+      .catch((err) => console.log(err));
+  };
+
+  const RemoveStudent=(stdname)=>{
+    axios
+      .delete("http://localhost:8086/RemoveStudentFromClass", {
+		"teacherUsername": Session,
+		"class_id": id,
+		 "stdUsername":stdname
+	})
+
+      .then((result) => {
+         console.log(stdname);
+         
+        
+      })
+
+      .catch((err) => console.log(err));
+  };
+    
 // const fetchdata = async () => {
 //     setLoading(true)
 //     try {
@@ -41,15 +104,21 @@ console.log(id);
 //       console.log(error)
 //     }
 //   }
-//   useEffect(()=>{
+   useEffect(()=>{
 //     setdata(dataa)
 //     fetchdata();
     
+    GetAllStudentAPI();
+    GetteacherofClass();
+    IsteacherOfclassAPI();
+
     
 
 
-//   },[])
+   },[])
   console.log(teachers);
+
+  
   return (
     <div>
      
@@ -60,15 +129,14 @@ console.log(id);
         <div className="section">
       <div className="teachers">
     <h1> Teachers</h1>
-   {dataa.map((curr)=>{
-      return <div className="t"><span> <i class="fa-solid fa-user"></i> {curr.name} </span></div>
-    })}
+   <div className="t"><span> <i class="fa-solid fa-user"></i> {teachers} </span></div>
+    
      
     </div>
     <div className="students">
         <h1>Classmates</h1>
-           {dataa.map((curr)=>{
-      return( <div className="s"><span><i className="fa-solid fa-user " ></i> <div style={{display:"inline"}}> {curr.name} </div>
+           {data?.map((curr)=>{
+      return( <div className="s"><span><i className="fa-solid fa-user " ></i> <div style={{display:"inline"}}> {curr.f_name} {curr.l_name} </div>
       {isteacher && <div style={{display:"inline"}}><Button
         
         onClick={()=>{setisopen(!isopen)}}
@@ -91,7 +159,7 @@ console.log(id);
         }}
       >
         
-        <MenuItem onClick={handleDelete}>Remove</MenuItem>
+        <MenuItem onClick={()=>{handleDelete(curr.username)}}>Remove</MenuItem>
         
       </Menu> </div>} </span></div>)
     })}

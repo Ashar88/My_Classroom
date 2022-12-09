@@ -44,7 +44,7 @@ const NavBarBox = ({setdate,date}) => {
       })
 
       .then((result) => {
-        
+        setdate(!date);
         
         console.log(result.data);
       })

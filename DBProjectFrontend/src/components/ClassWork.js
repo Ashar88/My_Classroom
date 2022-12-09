@@ -19,25 +19,45 @@ const StyleModal=styled(Modal)({
 
 const ClassWork = () => {
   const routeParams = useParams();
+  const [date,setdate]=useState(false);
   const [assdata,setassdata]=useState(data);
-  const{setassignId,assignId,isteacher,Session}=useGlobalContext();
+  const{setassignId,assignId}=useGlobalContext();
+  const Session=localStorage.getItem('user')
   const [asstitle,setasstitle]=useState("");
   const [asstotalmark,setasstotalmark]=useState(100);
   const [assduedate,setassduedate]=useState("");
   const [assdes,setassdes]=useState("");
-
-  const{id:classid}=useParams()
+  const[isteacher,setisteacher]=useState(false)
+  const{id}=useParams()
   const handleCreateAssign=()=>{
     CreateAssignmentAPI();
-    console.log(Session.name);
+    console.log(Session);
 
     setopen(false)
+    setdate(!date)
   }
+
+  const IsteacherOfclassAPI =  () => {
+     axios
+      .post("http://localhost:8086/IsTeacherOfaClass",{
+		"class_id": id,
+		"TeacherUsername": Session
+	})
+
+      .then((result) => {
+
+
+        setisteacher(result.data)
+        
+      })
+
+      .catch((err) => console.log(err));
+  };
 
   const ViewAllAssignmentApi = () => {
     axios
       .post("http://localhost:8086/ViewAllAssignment", {
-		"class_id": classid
+		"class_id": id
 	})
       .then((result) =>{ 
 
@@ -50,14 +70,19 @@ const ClassWork = () => {
   const CreateAssignmentAPI = () => {
     axios
       .post("http://localhost:8086/createAssignment", {
-		"teacherUsername": Session.name ,
-		"class_id": classid,
+		"teacherUsername": Session,
+		"class_id": id,
 		"title": asstitle,
 		"totalMarks":asstotalmark,
-		"due_date":assduedate,
+		"due_date":"2023/12/15",
 		"descript": assdes
 	})
-      .then((result) => console.log(result.data))
+      .then((result) => 
+      {
+        
+        console.log(result.data)
+        
+      })
       .catch((err) => console.log(err));
   };
 
@@ -68,7 +93,7 @@ const ClassWork = () => {
 
         setassignId(courseid);
 
-       nav(`/class/${classid}/classwork/${courseid} `);
+       nav(`/class/${id}/classwork/${courseid} `);
 
         
 
@@ -77,8 +102,9 @@ const ClassWork = () => {
      useEffect(()=>{
 
       ViewAllAssignmentApi();
+      IsteacherOfclassAPI();
 
-     },[])
+     },[date])
 
      
 
@@ -89,7 +115,8 @@ const ClassWork = () => {
 
      
      <div className="section">
-     <div class="teachers"><h1>ClassWork <i className="fa-sharp fa-solid fa-plus plus-btn " onClick={(e)=>{setopen(true)}}></i>
+     <div class="teachers"><h1>ClassWork
+     { isteacher && <div>  <i className="fa-sharp fa-solid fa-plus plus-btn " onClick={(e)=>{setopen(true)}}></i>
        <StyleModal
   open={open}
   onClose={(e)=>{setopen(false)}}
@@ -111,7 +138,7 @@ const ClassWork = () => {
     setassduedate(e.target.value)}} />
     <Button sx={{marginTop:"10px"}} onClick={handleCreateAssign}> Submit</Button>
   </Box>
-</StyleModal></h1></div></div>
+</StyleModal></div>}</h1></div></div>
        <div class="classwork">
        
        {/* {
@@ -124,7 +151,7 @@ const ClassWork = () => {
        assdata.map((curr)=>{
         
 
-          return <Link to= {`/class/${classid}/classwork/${curr.a_id}`} className='bttnn' state={{from:{...curr}}} onClick={()=>{NavToAssign(curr.a_id)}} > <div class="c1"> <i class="fa-solid fa-file-arrow-up"></i>{curr.a_title} </div></Link> 
+          return <Link to= {`/class/${id}/classwork/${curr.a_id}`} className='bttnn' state={{from:{...curr}}} onClick={()=>{NavToAssign(curr.a_id)}} > <div class="c1"> <i class="fa-solid fa-file-arrow-up"></i>{curr.a_title} </div></Link> 
         })}
         
        

@@ -10,10 +10,11 @@
 .bttnn{
     border:none;
     margin:2vw;
-    
+    background-color: #75c9b7;
     display: flex;
     width:60vw;
     border-radius: 10px;
+    
 }
 .bttnn:hover{
     background-color:aquamarine
@@ -210,6 +211,7 @@
 .classwork {
     margin: auto;
     max-width: 47.5rem;
+    
 }
 
 .classwork .c1 {

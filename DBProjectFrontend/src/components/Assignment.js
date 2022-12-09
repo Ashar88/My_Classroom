@@ -2,6 +2,7 @@ import { PhotoCamera } from '@mui/icons-material';
 import { Button, IconButton } from '@mui/material';
 import React, { useState } from 'react'
 import UploadButton from './UploadButton'
+import axios from "axios";
 import { useParams } from 'react-router-dom';
 import './ass.css'
 import { useLocation } from 'react-router-dom';
@@ -12,11 +13,34 @@ import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 const Assignment = ({name,id}) => {
     const [upload,setupload]=useState(true);
     const[comment,setcomment]=useState("");
-    
+    const[isteacher,setisteacher]=useState(false);
+    const Session=localStorage.getItem('user')
   const location=useLocation();
   const {from}=location.state
-  console.log(from);
-    
+  //console.log(from);
+
+ const IsteacherOfclassAPI =  () => {
+     axios
+      .post("http://localhost:8086/IsTeacherOfaClass",{
+		"class_id": from.class_id,
+		"TeacherUsername": Session
+	})
+
+  
+      .then((result) => {
+
+
+        setisteacher(result.data)
+        
+      })
+
+      .catch((err) => console.log(err));
+  };
+  
+    useEffect(()=>{
+      console.log(from.class_id)
+    IsteacherOfclassAPI()
+    },[])
   return (
     
 
@@ -31,8 +55,12 @@ const Assignment = ({name,id}) => {
          </div>
      
          <div class="pd">
-             <span><b>Marks:</b>{from.total_marks}</span><br />
-             <span> <b>Due Date</b> {from.due_date}</span>
+             <span><b>Marks:</b>{from.total_marks}</span>
+                          <span>
+                           <b>Due Date:</b> 
+                          {from.due_date  }<br></br></span>
+                          <br />
+
          </div>
  
          <div class="assignment">
@@ -41,7 +69,7 @@ const Assignment = ({name,id}) => {
            </div>
            </div>
 
-          <form>
+          {/* <form>
            <div class="class-comments">
             <span><i class="fa-solid fa-user"></i>Class comments</span>
             <div class="comments">
@@ -54,12 +82,12 @@ const Assignment = ({name,id}) => {
 
 
         </div>
-        </form>
+        </form> */}
 
     </div>
     
     
-   <div class="submission ">
+   {!isteacher&&<div class="submission ">
      <h3>    Your work </h3>
      <span>Status</span>
      {!upload &&<div class="upload">
@@ -70,7 +98,7 @@ const Assignment = ({name,id}) => {
     
 
         
-   </div>
+   </div>}
    
 </div>
 
