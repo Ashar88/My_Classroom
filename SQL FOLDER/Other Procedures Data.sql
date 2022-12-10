@@ -1077,12 +1077,12 @@ sp: BEGIN
     SET FOREIGN_KEY_CHECKS=0;
     
                          -- Verification here--
-	select 1;
+	-- select 1;
 		Select count(*) into flag from class where class.class_id = class_id;
         if flag = 0 then
 			leave sp;
 		 end if;  set flag = 0;   -- for using it again	
-    select 2; 
+    -- select 2; 
     
                          -- logic here--
                          
@@ -1411,8 +1411,108 @@ DELIMITER ;
 
 
 
+Drop procedure if exists GetStudentData;
+DELIMITER ;;
+CREATE  DEFINER=`root`@`localhost` PROCEDURE `GetStudentData`(
+IN username varchar(35)
+)
+COMMENT 'Get the Student Data'
+sp: BEGIN
+     DECLARE flag int; DECLARE var_id int;
+	 DECLARE exit handler for sqlexception
+	   BEGIN
+		  select "error"
+	   ROLLBACK;
+	 END;
+	   
+	 DECLARE exit handler for sqlwarning
+	  BEGIN
+         select "warning"
+	  ROLLBACK;
+	 END;
+
+	START TRANSACTION;
+    SET FOREIGN_KEY_CHECKS=0;
+    
+    
+		Select username, f_name, l_name, email, phone_no, gender, age from user
+        where user.username = username;
+    
+    
+    COMMIT;
+	END ;;
+DELIMITER ;
 
 
+
+
+Drop procedure if exists GetTeacherData;
+DELIMITER ;;
+CREATE  DEFINER=`root`@`localhost` PROCEDURE `GetTeacherData`(
+IN username varchar(35)
+)
+COMMENT 'Get the Teacher Data'
+sp: BEGIN
+     DECLARE flag int; DECLARE var_id int;
+	 DECLARE exit handler for sqlexception
+	   BEGIN
+		  select "error"
+	   ROLLBACK;
+	 END;
+	   
+	 DECLARE exit handler for sqlwarning
+	  BEGIN
+         select "warning"
+	  ROLLBACK;
+	 END;
+
+	START TRANSACTION;
+    SET FOREIGN_KEY_CHECKS=0;
+    
+    
+		Select username, f_name, l_name, email, phone_no, gender, age from user
+        where user.username = username;
+    
+    
+    COMMIT;
+	END ;;
+DELIMITER ;
+
+
+
+
+
+Drop procedure if exists GetClassData;
+DELIMITER ;;
+CREATE  DEFINER=`root`@`localhost` PROCEDURE `GetClassData`(
+IN class_id int
+)
+COMMENT 'Get the Class Data'
+sp: BEGIN
+     DECLARE flag int; DECLARE var_id int;
+	 DECLARE exit handler for sqlexception
+	   BEGIN
+		  select "error"
+	   ROLLBACK;
+	 END;
+	   
+	 DECLARE exit handler for sqlwarning
+	  BEGIN
+         select "warning"
+	  ROLLBACK;
+	 END;
+
+	START TRANSACTION;
+    SET FOREIGN_KEY_CHECKS=0;
+    
+    
+		Select * from class
+        where class.class_id = class_id;
+    
+    
+    COMMIT;
+	END ;;
+DELIMITER ;
 
 
 

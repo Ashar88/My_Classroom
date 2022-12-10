@@ -10,10 +10,11 @@
 .bttnn{
     border:none;
     margin:2vw;
-    
+    background-color: #75c9b7;
     display: flex;
     width:60vw;
     border-radius: 10px;
+    
 }
 .bttnn:hover{
     background-color:aquamarine
@@ -87,7 +88,7 @@
 }
 .lin:hover{
     color: #3c4043;
-    style:none;
+    
     
 }
 .dot {
@@ -188,7 +189,7 @@
 }
 
 .section .students .s {
-    border-bottom: 2px solid #E4E4E4;
+    border-bottom: 2px solid #ac0303;
     padding: 16px;
     letter-spacing: .01785714em;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -210,6 +211,7 @@
 .classwork {
     margin: auto;
     max-width: 47.5rem;
+    
 }
 
 .classwork .c1 {

@@ -1,23 +1,64 @@
 import React, { useRef, useState } from 'react'
 import "./Login.css"
-
+import axios from "axios";
 import { FcGoogle } from 'react-icons/fc';
 import data from './data';
 import { useGlobalContext } from '../context';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+
 const Login = () => {
+
+    
+
+    const[validdata,setvaliddata]=useState(data);
+
 
     const [name,setname]=useState('');
     const [password,setpassword]=useState('');
-    const [validdata,setvaliddata]=useState(data)
-    const [check,setcheck]=useState(false);
-    const{SetSession,setloginstate}=useGlobalContext();
-    const ch=useRef(false)
+    
+   
+    
     const nav=useNavigate();
     
+const LoginAPI=  () => {
+     axios
+      .post("http://localhost:8086/ValidateUser",{
+		"username": name,
+		"password": password
+	})
+
+      .then((result) => {
+
+        console.log(result.data)
+
+        if(result.data)
+        {
+            //SetSession({name:name,password:password});
+
+                    
+                   localStorage.setItem('user', name);
+                   //(true);
+                    nav('/home')
+        }
+        else
+        {
+            alert("Wrong Password Please Enter Again");
+        }
+        
+        
+      })
+
+      .catch((err) => console.log(err));
+  };
+
+  const handleSubmit=()=>{
+    //LoginAPI();
+    validpassword();
+  }
+
     const validpassword=(e)=>{
-        e.preventDefault();
+        // e.preventDefault();
         
         console.log("u")
         let count=0;
@@ -26,8 +67,12 @@ const Login = () => {
             {
                 if(curr.password===password)
                 {
-                   SetSession({name:name,password:password});
-                   setloginstate(true);
+                    //setperson({firstName:curr.name,lastName:curr.password})
+                  // SetSession({name:name,password:password});
+
+                    
+                   localStorage.setItem('user', name);
+                   //setloginstate(true);
                     nav('/home')
                     
                 }
@@ -45,28 +90,28 @@ const Login = () => {
     
     <div className="container">
        <div className="item1">
-<form className="form1" onSubmit={validpassword}>
+<div className="form1" >
  <h1>Login</h1>
  <label  >Email:</label>
- <input type="text" placeholder="abc@gmail.com" value={name} onChange={(e)=>{
+ <input type="text" placeholder="abc@gmail.com"  onChange={(e)=>{
     setname(e.target.value)
  }}/>
  
 <label >Password:</label>
-<input type="text" placeholder="*********" value={password} onChange={(e)=>{
+<input type="password" placeholder="*********"  onChange={(e)=>{
     setpassword(e.target.value)
 }}/>
-<button className="l" type='Submit'>Login</button>
-<a href="">Forgot your password?</a>
-<button className="g" ><FcGoogle/> Continue With Google</button>
+<button className="l" onClick={handleSubmit}>Login</button>
+{/* <a href="">Forgot your password?</a>
+<button className="g" ><FcGoogle/> Continue With Google</button> */}
 <Link to='/signup' className='lia'>  <h4>Dont have account?</h4> start here</Link>
-</form>
+</div>
  
        </div> 
         <div className="item2">
         
-            <h1>{name}</h1>
-            <h1>{password}</h1>
+             <h1>{name}</h1>
+            <h1>{password}</h1> 
                
 
         </div>

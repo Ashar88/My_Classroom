@@ -2,7 +2,10 @@ import { PhotoCamera } from '@mui/icons-material';
 import { Button, IconButton } from '@mui/material';
 import React, { useState } from 'react'
 import UploadButton from './UploadButton'
+import axios from "axios";
+import { useParams } from 'react-router-dom';
 import './ass.css'
+import { useLocation } from 'react-router-dom';
 import data from './assignmentData'
 import NavBarClass from './NavBarClass';
 import { useEffect } from 'react';
@@ -10,33 +13,63 @@ import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 const Assignment = ({name,id}) => {
     const [upload,setupload]=useState(true);
     const[comment,setcomment]=useState("");
+    const[isteacher,setisteacher]=useState(false);
+    const Session=localStorage.getItem('user')
+  const location=useLocation();
+  const {from}=location.state
+  //console.log(from);
 
-    
+ const IsteacherOfclassAPI =  () => {
+     axios
+      .post("http://localhost:8086/IsTeacherOfaClass",{
+		"class_id": from.class_id,
+		"TeacherUsername": Session
+	})
+
+  
+      .then((result) => {
+
+
+        setisteacher(result.data)
+        
+      })
+
+      .catch((err) => console.log(err));
+  };
+  
+    useEffect(()=>{
+      console.log(from.class_id)
+    IsteacherOfclassAPI()
+    },[])
   return (
     
 
     <div>
-    <NavBarClass/>
+    
       <div class="flexxx">
     <div class="asg-sec">
         <h2 class="text-primary line1">Assignment1</h2>
         <div class="td">
-            <span>Teacher name</span>
-            <span>.Date</span>
+            <span>{from.username}</span><br />
+            <span>{from.date_created}</span>
          </div>
      
          <div class="pd">
-             <span>100 points</span>
-             <span>.Due date</span>
+             <span><b>Marks:</b>{from.total_marks}</span>
+                          <span>
+                           <b>Due Date:</b> 
+                          {from.due_date  }<br></br></span>
+                          <br />
+
          </div>
  
          <div class="assignment">
             <div class="box"> 
-           <span class="name">Assignment PDF</span>
+           <span class="name">{from.descript}</span>
            </div>
            </div>
 
-          <form>
+          {/* <form>
            <div class="class-comments">
             <span><i class="fa-solid fa-user"></i>Class comments</span>
             <div class="comments">
@@ -49,12 +82,12 @@ const Assignment = ({name,id}) => {
 
 
         </div>
-        </form>
+        </form> */}
 
     </div>
     
     
-   <div class="submission ">
+   {!isteacher&&<div class="submission ">
      <h3>    Your work </h3>
      <span>Status</span>
      {!upload &&<div class="upload">
@@ -65,7 +98,7 @@ const Assignment = ({name,id}) => {
     
 
         
-   </div>
+   </div>}
    
 </div>
 

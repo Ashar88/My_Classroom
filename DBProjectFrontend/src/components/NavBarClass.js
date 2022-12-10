@@ -1,5 +1,5 @@
 import React, { useEffect,useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -32,8 +32,9 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const NavBarClass = () => {
  const [anchorElNav, setAnchorElNav] = React.useState(null);
- const {clickpeple,classid,setclickpeople,setclasswork,isclasswork}=useGlobalContext();
+ const {clickpeple,setclickpeople,setclasswork,isclasswork}=useGlobalContext();
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const {id:classid} = useParams()
   const links=[{name:"Stream",link:`/class/${classid}`},{name:"ClassWork",link:`/class/${classid}/classwork`}, {name:"People",link:`/class/${classid}/people`}]
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
