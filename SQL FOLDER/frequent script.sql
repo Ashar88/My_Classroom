@@ -113,6 +113,8 @@ call DeleteAssignment(2,"haider92", @var);
 call ViewAllPost("2");
 call AllStudents("2");
 
+call GetClassData("2");
+
 call GetStudentData("Ashar88");
 call ViewAllAssignment("2");
 

@@ -14,6 +14,7 @@ call ViewAllPost("2");
 call AllStudents("2");
 
 
+
 call CommentOnPost(6,null,"haider92","Hey guyz i have missed some details, will share it in some other post"); 
 call CommentOnPost(6,"Ashar88",null,"Alright teacher"); 
 call CommentOnPost(6,"Yousuf2",null,"Please share it quick, sir."); 
