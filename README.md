@@ -1,2 +1,2 @@
 # My_Classroom
-Our Project for Database Course. Here we'll be using React, Java Springboot and Relation Database.
+Our Project for Database & SCD Course. Here we'll be using React, Java Springboot and Relational Database.
