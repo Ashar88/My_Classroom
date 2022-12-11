@@ -2,6 +2,8 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+
+    
 }
 .bo{
 border: 2px solid #bebebe;
@@ -18,10 +20,12 @@ width: 80%;
 .asg-sec {
     margin: 10px 100px;
 
-    width: 50.5rem;
-    border-bottom: 1px solid #2A53F6;
+    width: 50%;
+    
+    
     height: 120px;
     margin-top: 20px;
+    
     font-family: Arial, Helvetica, sans-serif;
 }
  .thin {
@@ -29,9 +33,14 @@ width: 80%;
     font-weight: 100;
     
 }
-
+.break{
+border-bottom: 1px solid #2A53F6;
+}
 .asg-sec .td {
     padding: 0px 12px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 0px;
     color: #6C6969;
 }
 
@@ -53,17 +62,21 @@ width: 80%;
 }
 
 .assignment {
-    border-bottom: 2px solid #E4E4E4;
+
     padding-bottom: 26px;
+    margin-top: 20px;
 
 }
 
-.assignment .box .name {
+.name {
+
+    
+  
     font-size: 20px;
     color: #505152;
 }
 
-.assignment .box .name:hover {
+ .name:hover {
     color: #2A53F6;
 }
 
@@ -102,6 +115,7 @@ width: 80%;
     display: none;
 }
 .submission {
+
     margin: 20px 100px;
     border: 2px solid #E4E4E4;
     width: 35%;

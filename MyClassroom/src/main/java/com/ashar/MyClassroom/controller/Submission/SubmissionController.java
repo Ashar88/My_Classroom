@@ -35,11 +35,15 @@ public class SubmissionController {
 	private SubmissionService SubmissionService;
 
 	@PostMapping("/UploadAndSubmitAssignment")
-	public boolean UploadAndSubmitAssignment(@RequestParam("stdUsername") String stdUsername,
-			@RequestParam("assignmentId") int assignmentId, @RequestPart("External_File") MultipartFile file)
+	public boolean UploadAndSubmitAssignment(@RequestParam(value = "stdUsername", required = false) String stdUsername,
+			@RequestParam(value = "assignmentId", required = false) String assignmentId, @RequestPart("External_File") MultipartFile file)
 			throws SQLException, IOException {
-
-		List<String> return_value = SubmissionService.UploadAndSubmitAssignment(stdUsername, assignmentId, file);
+		
+		 System.out.println(stdUsername + "  " + assignmentId );
+		 
+		 int assignmentIdd = Integer.parseInt(assignmentId);
+		
+		List<String> return_value = SubmissionService.UploadAndSubmitAssignment(stdUsername, assignmentIdd, file);
 		String id = return_value.get(0);
 		boolean result1 = Boolean.parseBoolean(return_value.get(1));
 

@@ -11,7 +11,10 @@ import NavBarClass from './NavBarClass';
 import { useEffect } from 'react';
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 const Assignment = ({name,id}) => {
+  
     const [upload,setupload]=useState(true);
+    const [load,seload]=useState(false);
+    const[getfiles,setgetfiles]=useState("")
     // const [Grade,SetGrade]=useState([{std_username: "",
 		// assign_id: "",
 		// teacher_username:"" ,
@@ -35,8 +38,24 @@ const Assignment = ({name,id}) => {
 
   
   const {from}=location.state
+ // console.log(from.a_id)
   //console.log(from);
 
+  const storeFilesAPI =()=>{
+    axios
+    .post("http://localhost:8086/UploadAndSubmitAssignment",{
+    "stdUsername":Session,
+    "assignmentId":from.a_id,
+    "External_File":getfiles
+    })
+    .then((result)=>{
+      console.log(result.data)
+    })
+    .catch((err)=>{
+      console.log(getfiles);
+      console.log(err);
+    })
+  }
  const IsteacherOfclassAPI =  () => {
      axios
       .post("http://localhost:8086/IsTeacherOfaClass",{
@@ -57,7 +76,7 @@ const Assignment = ({name,id}) => {
   const ViewAssignGrade =  async() => {
      await axios
       .post("http://localhost:8086/ViewGrade",{
-		"assignment_id": 38,
+		"assignment_id": from.a_id,
 		"stdUsername": Session
 	})
 
@@ -85,38 +104,82 @@ const Assignment = ({name,id}) => {
       .catch((err) => console.log(err));
   };
   
-    useEffect(()=>{
+
+
+
+
+
+
+  const fileUpload=()=>{
+    const url = 'http://localhost:8086/UploadAndSubmitAssignment';
+    const formData = new FormData();
+    formData.append('stdUsername',Session)
+    formData.append('assignmentId',from.a_id)
+    formData.append('External_File',getfiles)
+    const config = {
+        headers: {
+            'content-type': 'multipart/form-data'
+        }
+    }
+    return  axios.post(url, formData,config)
+  }
+
+
+
+
+
+
+
+
+
+    
+  useEffect(()=>{
       //console.log(from.class_id)
     IsteacherOfclassAPI()
     ViewAssignGrade()
     },[])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   return (
     
 
     <div>
-    
+    {
+      
+    }
       <div class="flexxx">
     <div class="asg-sec">
         <h2 class="text-primary line1">Assignment </h2>
         <div class="td">
-            <span>{from.username}  </span><br />
-            <span>{from.date_created}</span>
-         </div>
-     
-         <div class="pd">
-             <span><b>Marks:</b>{from.total_marks}</span>
+            <span>{from.username}  </span>
+            <span><b>  Date Created:</b>{from.date_created}</span>
+            <span><b>Marks:</b>{from.total_marks}</span>
                           <span>
                            <b>Due Date:</b> 
-                          {from.due_date  }<br></br></span>
-                          <br />
+                          {from.due_date  }</span>
+                          
+         </div>
+     <div className="break"></div>
+         <div class="pd">
+             
 
          </div>
  
-         <div class="assignment">
-            <div class="box"> 
-           <span class="name">{from.descript}</span>
-           </div>
-           </div>
+        
 
           {/* <form>
            <div class="class-comments">
@@ -132,21 +195,27 @@ const Assignment = ({name,id}) => {
 
         </div>
         </form> */}
-
+ <div class="assignment">
+          <h2 class="text-primary line1">Description </h2>   
+           <span class="name">{from.descript}</span>
+           
+           </div>
     </div>
+    
+
     
     
    {!isteacher&&<div class="submission ">
      <h3>    Your work </h3>
      <span>Status</span>
      {!upload &&<div class="upload">
-        <span class="f">File name</span>
+        <span class="f">{getfiles.name}</span>
      </div>}
-   { upload && <UploadButton/> }
-    { ! upload && <button type="btn" class="btn btn-outline-primary">submit</button> }
+   { upload && <UploadButton setupload={setupload} setgetfiles={setgetfiles}/> }
+    { ! upload && <button type="btn" class="btn btn-outline-primary" onClick={()=>{fileUpload()}}>submit</button> }
     
     <div className="grademarks">  <h3>{grade && <div>Marks Obtained {grade} /{from.total_marks}</div>}</h3></div>
-   {//console.log(grade)
+   {console.log(getfiles)
    }
         
    </div>}

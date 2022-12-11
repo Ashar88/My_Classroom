@@ -23,7 +23,7 @@ BEGIN
 	START TRANSACTION;
 
 	Create table if not exists user (
-			  username varchar(100) primary key,
+			  username varchar(35) primary key,
 			  f_name varchar(35) not Null,
 			  l_name varchar(35),
 			  user_password varchar(100) not NUll,
@@ -34,7 +34,7 @@ BEGIN
 		   );
 		   
 		Create table if not exists Teacher (   -- needs updation 
-			username varchar(100),
+			username varchar(35),
             department varchar(35),
             designation varchar(35),
             education varchar(35),
@@ -47,12 +47,12 @@ BEGIN
 Select "class";
 		Create table if not exists Class (
 			class_id int AUTO_INCREMENT primary key,
-			username varchar(100),
+			username varchar(35),
 			class_name varchar(35) Not Null,
 			course_title varchar(35) Not Null,
 			Course_Code varchar(35) Not Null,
             Unique_Class_code varchar(15) unique,
-			Date_created dateTime,
+			Date_created dateTime not null,
 			descript varchar(300),
 			
 			
@@ -61,8 +61,8 @@ Select "class";
 
 Select "student";
 		Create table if not exists Student (  -- needs updation
-			username varchar(100),
-			class_id int,
+			username varchar(35),
+			class_id int ,
 			Department varchar(35),
 			Date_joined dateTime,
 			
@@ -75,8 +75,8 @@ Select "Post";
 		Create table if not exists Post (
 			post_id int AUTO_INCREMENT,    -- one class can have multiple posts, so use id to distinguish betweeen them.
 			class_id int,
-			title varchar(35),
-			descript varchar(300),
+			title varchar(35) not null,
+			descript varchar(300) ,
 			dateCreated dateTime,
 			
 			FOREIGN KEY (class_id) REFERENCES class(class_id),
@@ -87,9 +87,9 @@ Select "Post";
 			a_id int AUTO_INCREMENT,       -- one class can have multiple assignments, so use id to distinguish betweeen them.
 			class_id int,
 			a_title varchar(35),
-			total_marks int,
+			total_marks int not null,
 			Date_created dateTime,
-			due_date dateTime,
+			due_date dateTime not null,
 			descript varchar(300),
             
 			FOREIGN KEY (class_id) REFERENCES class(class_id),
@@ -98,7 +98,7 @@ Select "Post";
 
 
 		Create table if not exists Grade (
-			std_username varchar(100),         -- graded to which student
+			std_username varchar(35),         -- graded to which student
 			assign_id int,                    -- graded on which assignment
 			marks_obtained float,
 
@@ -111,12 +111,12 @@ Select "Post";
 
 		Create table if not exists post_comment (
 			comment_id int AUTO_INCREMENT primary key,    -- post can has multiple comments
-			post_id int ,                     -- post number of the class (class can have many posts).
+			post_id int ,                   			  -- post number of the class (class can have many posts).
 			
 			comment_time datetime not null,
 			comment_text varchar(255) not null,
-			comment_by_std_username varchar(100) default null,    -- comment can be made either by teacher and student
-			comment_by_teacher_username varchar(100) default null,
+			comment_by_std_username varchar(35) default null,    -- comment can be made either by teacher and student
+			comment_by_teacher_username varchar(35) default null,
 
 
 			FOREIGN KEY (post_id) REFERENCES post(post_id),
@@ -128,12 +128,12 @@ Select "Post";
 		Create table if not exists Assignment_Submission (
 			
 			submission_id int auto_increment,
-            std_username varchar(100),         -- submission by student
+            std_username varchar(35),         -- submission by student
 			assign_id int,                     -- assignment of which class
-            FileName varchar(50),
-            FileSize varchar(50),
-            FileContentType varchar(50),
-            Data_submitted datetime,
+            FileName varchar(50) not null,
+            FileSize varchar(50) not null,
+            FileContentType varchar(50) not null,
+            Data_submitted datetime not null,
             DownloadUrl varchar(200),
             External_File LONGBLOB,
 			

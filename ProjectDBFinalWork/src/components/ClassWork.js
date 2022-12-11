@@ -111,8 +111,8 @@ DeleteAssignment();
         },
       })
       .then((result) => {
-        //console.log(result.data);
-        //console.log(assignmentId);
+        console.log(result.data);
+        console.log(assignmentId);
         
       })
       .catch((err) => {
@@ -233,7 +233,7 @@ DeleteAssignment();
        assdata?.map((curr)=>{
         
 
-          return <div className="buttons">  <Link to= {`/class/${id}/classwork/${curr.a_id}`} className='bttnn' state={{from:{...curr}}} onClick={()=>{NavToAssign(curr.a_id)}} > <div class="c1"> <i class="fa-solid fa-file-arrow-up"></i>{curr.a_title} </div></Link><Button variant="contained" sx={{bgcolor:"#75c9b7",float: "right",display:"inline",height:"40px" }} onClick={()=>{seteditassid(curr.a_id);seteditass(true);}}>Edit</Button>
+          return <div className="buttons">  <Link to= {`/class/${id}/classwork/${curr.a_id}`} className='bttnn' state={{from:{...curr}}} onClick={()=>{NavToAssign(curr.a_id)}} > <div class="c1"> <i class="fa-solid fa-file-arrow-up"></i>{curr.a_title} </div></Link>{isteacher && <div><Button variant="contained" sx={{bgcolor:"#75c9b7",float: "right",display:"inline",height:"40px" }} onClick={()=>{seteditassid(curr.a_id);seteditass(true);}}>Edit</Button>
           <StyleModal
               open={editass}
               onClose={(e) => {
@@ -334,7 +334,7 @@ DeleteAssignment();
                 </Button>
                 </Box>
               </Box>
-            </StyleModal> </div>
+            </StyleModal></div>} </div>
         })}
          
        

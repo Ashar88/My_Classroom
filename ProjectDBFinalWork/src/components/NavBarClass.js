@@ -35,10 +35,41 @@ const NavBarClass = () => {
  const [anchorElNav, setAnchorElNav] = React.useState(null);
  const {clickpeple,setclickpeople,setclasswork,isclasswork}=useGlobalContext();
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const [classname,setclassname]=useState([
+	{
+		class_id: "",
+		class_name: "",
+		course_title:"" ,
+		description:"" ,
+		unique_class_code:"" ,
+		date_created: "",
+		course_Code: ""
+	}
+])
   const {id:classid} = useParams()
   const [isteacher,setisteacher]=useState(false);
   const Session = localStorage.getItem("user");
   const links=[{name:"Stream",link:`/class/${classid}`},{name:"ClassWork",link:`/class/${classid}/classwork`}, {name:"People",link:`/class/${classid}/people`}]
+
+
+
+  const ClassNameApi = () => {
+    axios
+      .post("http://localhost:8086/GetClassData", {
+		"class_id": classid
+	})
+
+      .then((result) => {
+        
+        // console.log(result.data);
+        const temp=result.data;
+        //console.log(class_name);
+        setclassname(temp);
+        console.log(classname)       
+      })
+      .catch((err) => console.log(err));
+  };
 
   const sub={name:"Submission",
   link:`/class/${classid}/Submission`
@@ -84,7 +115,9 @@ const NavBarClass = () => {
   };
 useEffect(()=>{
 IsteacherOfclassAPI()
+ClassNameApi()
 },[])
+
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
@@ -95,18 +128,18 @@ IsteacherOfclassAPI()
         <Toolbar disableGutters >
           
           <Abc/>
-          <Typography
+          <Link to={links[0].link} className="linkclass">  <Typography
             variant="h6"
             noWrap
             component="a"
-            href="/"
+            
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
               
               fontWeight: 700,
               letterSpacing: '.1rem',
-              color: 'inherit',
+              color: "white",
               textDecoration: 'none',
               '&:hover': {
     color: '#247579',
@@ -114,8 +147,8 @@ IsteacherOfclassAPI()
 }
             }}
           >
-            ClassName
-          </Typography>
+            {classname[0].class_name}
+          </Typography></Link>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
