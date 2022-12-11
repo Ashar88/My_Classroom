@@ -111,8 +111,8 @@ DeleteAssignment();
         },
       })
       .then((result) => {
-        //console.log(result.data);
-        //console.log(assignmentId);
+        console.log(result.data);
+        console.log(assignmentId);
         
       })
       .catch((err) => {

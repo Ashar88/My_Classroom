@@ -11,7 +11,9 @@ import NavBarClass from './NavBarClass';
 import { useEffect } from 'react';
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 const Assignment = ({name,id}) => {
+  
     const [upload,setupload]=useState(true);
+    const[getfiles,setgetfiles]=useState("")
     // const [Grade,SetGrade]=useState([{std_username: "",
 		// assign_id: "",
 		// teacher_username:"" ,
@@ -35,8 +37,28 @@ const Assignment = ({name,id}) => {
 
   
   const {from}=location.state
+ // console.log(from.a_id)
   //console.log(from);
 
+  const storeFilesAPI =()=>{
+
+
+
+    
+    axios
+    .post("http://localhost:8086/UploadAndSubmitAssignment",{
+    "stdUsername":Session,
+    "assignmentId":from.a_id,
+    "External_File":getfiles
+    })
+    .then((result)=>{
+      console.log(result.data)
+    })
+    .catch((err)=>{
+      console.log(getfiles);
+      console.log(err);
+    })
+  }
  const IsteacherOfclassAPI =  () => {
      axios
       .post("http://localhost:8086/IsTeacherOfaClass",{
@@ -57,7 +79,7 @@ const Assignment = ({name,id}) => {
   const ViewAssignGrade =  async() => {
      await axios
       .post("http://localhost:8086/ViewGrade",{
-		"assignment_id": 38,
+		"assignment_id": from.a_id,
 		"stdUsername": Session
 	})
 
@@ -94,7 +116,9 @@ const Assignment = ({name,id}) => {
     
 
     <div>
-    
+    {
+      
+    }
       <div class="flexxx">
     <div class="asg-sec">
         <h2 class="text-primary line1">Assignment </h2>
@@ -142,11 +166,11 @@ const Assignment = ({name,id}) => {
      {!upload &&<div class="upload">
         <span class="f">File name</span>
      </div>}
-   { upload && <UploadButton/> }
-    { ! upload && <button type="btn" class="btn btn-outline-primary">submit</button> }
+   { upload && <UploadButton setupload={setupload} setgetfiles={setgetfiles}/> }
+    { ! upload && <button type="btn" class="btn btn-outline-primary" onClick={()=>{storeFilesAPI()}}>submit</button> }
     
     <div className="grademarks">  <h3>{grade && <div>Marks Obtained {grade} /{from.total_marks}</div>}</h3></div>
-   {//console.log(grade)
+   {console.log(getfiles)
    }
         
    </div>}
