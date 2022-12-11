@@ -22,6 +22,7 @@ import { useParams } from "react-router-dom";
 import { useEffect } from 'react';
 const Abc = () => {
   const{issidebaropen}=useGlobalContext();
+  const home="Home";
   const [state, setState] = React.useState({
     top: false,
     left: false,
@@ -96,8 +97,17 @@ console.log(Session)
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
+       <ListItem  disablePadding >
+           <Link to={'/Home'} className='linkss'> <ListItemButton >
+              <ListItemIcon>
+                 <InboxIcon /> 
+              </ListItemIcon>
+              <ListItemText primary={home}  />
+            </ListItemButton></Link>
+          </ListItem>
         { 
-          stddata.length&&stddata?.map((text, index) => (
+          
+          stddata.length>0 && stddata?.map((text, index) => (
           <ListItem key={text} disablePadding >
            <Link to={`/class/${text.class_id}`} className='linkss'> <ListItemButton >
               <ListItemIcon>
@@ -107,8 +117,10 @@ console.log(Session)
             </ListItemButton></Link>
           </ListItem>
         ))}
+
+       
         {
-          teacherdata.length &&teacherdata?.map((text, index) => (
+          teacherdata.length>0  && teacherdata?.map((text, index) => (
           <ListItem key={text} disablePadding >
            <Link to={`/class/${text.class_id}`} className='linkss'> <ListItemButton >
               <ListItemIcon>

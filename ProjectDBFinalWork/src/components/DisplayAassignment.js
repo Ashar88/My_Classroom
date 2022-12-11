@@ -2,11 +2,12 @@ import React from 'react'
 import { Avatar, LinearProgress } from '@mui/material'
 import { Button, Modal, styled, TextField } from "@mui/material";
 import { Box, Typography } from "@mui/material";
-
+import FileSaver from 'file-saver';
 import { useState,useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import axios from "axios";
-import './ViewAllAssignment.css'
+import './ViewAllAssignment.css';
+import fileDownload from 'js-file-download'
 import Loader from './Loader';
 const StyleModal = styled(Modal)({
   display: "flex",
@@ -16,7 +17,7 @@ const StyleModal = styled(Modal)({
 const DisplayAassignment = () => {
   const [progress, setProgress]=useState(false)
   
-
+  const [issubmit,setissubmit]=useState(false);
   const Session=localStorage.getItem('user')
   const{id}=useParams()
   const nav=useNavigate()
@@ -31,6 +32,11 @@ const DisplayAassignment = () => {
     AssignGradeApi()
     setopen(false)
   }
+
+
+  useEffect(()=>{
+  IsSubmissionAvailable();
+  },[])
   const AssignGradeApi = () => {
 
     
@@ -51,6 +57,75 @@ const DisplayAassignment = () => {
       } )
       .catch((err) => console.log(err));
   };
+
+
+
+   const IsSubmissionAvailable = () => {
+    axios
+      .post("http://localhost:8086/isSubmissionAvaliable",  {
+		"stdUsername": id2,
+		"assignmentId" : id3
+	}
+)
+
+      .then((result) => {
+        
+        setissubmit(result.data);
+         console.log(result.data)
+      })
+
+      .catch((err) => console.log(err));
+  };
+
+const DownloadSubmission = () => {
+      axios
+        .get('http://localhost:8086/download', {
+          params: {"stdUsername": id2,"assignmentId":id3}
+        })
+          .then((result) => console.log(result.data))
+          .catch((error) => console.log( error.response.data.message) );
+      
+    };
+// const DownloadSubmission2 = () => {
+//       axios
+//         .get(`http://localhost:8086/download/${id2}/${id3}`)
+//           .then((result) => {
+//             const d=result.headers
+//             console.log(result.data)
+            
+//           }
+          
+//           )
+//           .catch((error) => console.log( error.response.data.message) );
+//       
+//     };
+
+
+const DownloadSubmission2 = () => {
+  axios
+    .get(`http://localhost:8086/download/${id2}/${id3}`, {
+    responseType: 'blob',
+  })
+
+
+      .then((result) => {
+        // const d=result.headers
+        console.log(result.headers)
+        // fileDownload(result.data, result.headers)
+        FileSaver.saveAs(
+    `http://localhost:8086/download/${id2}/${id3}`,
+    "fileNameYouWishCustomerToDownLoadAs.anyType");
+      }
+      
+      )
+      .catch((error) => console.log( error.response.data.message) );
+      
+    };
+
+
+
+
+
   if(progress)
      {
       return <Loader/>
@@ -71,7 +146,11 @@ const DisplayAassignment = () => {
 
              {
               
-                 <div className='c2'> <h3 className='heading'>  </h3> <Button variant="contained" sx={{bgcolor:"#75c9b7",float: "right",ml:"250px" }} onClick={()=>{setopen(true)}}>Assign Grade</Button>
+                 <div className='c2'> 
+                 {issubmit&&<Button variant="contained" sx={{bgcolor:"#75c9b7",float: "left",ml:"20px" }} onClick={()=>{
+                  DownloadSubmission2()
+                 }} >Download</Button>}
+                   <Button variant="contained" sx={{bgcolor:"#75c9b7",float: "right",ml:"700px" }} onClick={()=>{setopen(true)}}>Assign Grade</Button>
                   <StyleModal
               open={open}
               onClose={(e) => {

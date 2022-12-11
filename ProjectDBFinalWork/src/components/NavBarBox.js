@@ -143,7 +143,7 @@ const NavBarBox = ({setdate,date}) => {
                   SetOpenCreateClass(true);
                 }}
               >
-                <Button variant="contained" color="primary">
+                <Button variant="contained" color="primary" sx={{bgcolor:"#75c9b7"}}>
                   Create Class
                 </Button>
               </li>

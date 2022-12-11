@@ -28,6 +28,7 @@ import NavBarClass from "./NavBarClass";
 import { Box } from "@mui/system";
 import { ContentCutOutlined } from "@mui/icons-material";
 import Comments from "./Comments";
+import CommentOnPost from "./CommentOnPost";
 const StyleModal = styled(Modal)({
   display: "flex",
   alignItems: "center",
@@ -36,6 +37,17 @@ const StyleModal = styled(Modal)({
 
 const Stream = () => {
   const options = ["Edit", "Delete"];
+   const [classname,setclassname]=useState([
+	{
+		class_id: "",
+		class_name: "",
+		course_title:"" ,
+		description:"" ,
+		unique_class_code:"" ,
+		date_created: "",
+		course_Code: ""
+	}
+])
   const [postiddelete, setpostiddelete] = useState("");
   const [deleteclass, setdeleteclass] = useState(false);
   const { classid } = useGlobalContext();
@@ -54,7 +66,7 @@ const Stream = () => {
   const [classarray, setclassarray] = useState([]);
   const [editopen, seteditopen] = useState(false);
   const [postdata, setpostdata] = useState([]);
-  const [date, setDate] = useState();
+  const [date, setDate] = useState(false);
 
   const [postid, setpostid] = useState([]);
   const { id } = useParams();
@@ -75,6 +87,23 @@ const Stream = () => {
   };
   const handleclose = () => {
     setisopen(false);
+  };
+
+   const ClassNameApi = () => {
+    axios
+      .post("http://localhost:8086/GetClassData", {
+		"class_id": id
+	})
+
+      .then((result) => {
+        
+        // console.log(result.data);
+        const temp=result.data;
+        //console.log(class_name);
+        setclassname(temp);
+        console.log(classname)       
+      })
+      .catch((err) => console.log(err));
   };
 
   const handleDelete = () => {
@@ -274,9 +303,9 @@ const Stream = () => {
     IsteacherOfclassAPI();
     // handleViewComment()
     //fetchPostid();
-
+    ClassNameApi();
     UniqueCodeAPI();
-    console.log("happy");
+    
 
     //handleApi8();
     //console.log(classarray)
@@ -414,16 +443,21 @@ const Stream = () => {
           </div>
         )}
         <div className="heading2">
-          <h1>Welcome To Classroom</h1>
+          <h1>Welcome To {classname[0].class_name}</h1>
         </div>
-        <h1 class="elements">{classarray?.title} </h1>
-        <h3 class="elements">{classarray?.section} </h3>
+      
       </div>
       <div class="flex">
         {isteacher && (
           <div class="upcoming">
             <h3 class="a">Class Code</h3>
             <p>{uniquecode}</p>
+          </div>
+        )}
+        {!isteacher && (
+          <div class="upcoming">
+            <h3 class="a">Upcoming</h3>
+            <p>no upcoming work!</p>
           </div>
         )}
         <div className="posts">
@@ -569,7 +603,9 @@ const Stream = () => {
                 </div>
                 <div class="class-comments stream-comments">
 
-                 <Comments {...curr}/> 
+                 <Comments {...curr} date={date} setDate={setDate}/> 
+                 {console.log(date+"stream")}
+                 <CommentOnPost {...curr } date={date} setDate={setDate}/>
                   {/* {commentPerson.map((curr) => {
                     return (
                       <div>
@@ -577,10 +613,7 @@ const Stream = () => {
                     );
                   })} */}
 
-                  <div class="comments">
-                    <input type="text" placeholder="Add class comments" />
-                    <i class="fa-solid fa-circle-arrow-right bg-secondary text-white"></i>
-                  </div>
+                  
                 </div>
               </div>
             );

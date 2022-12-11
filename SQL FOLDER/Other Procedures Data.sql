@@ -338,6 +338,7 @@ sp: BEGIN
 	START TRANSACTION;
     SET FOREIGN_KEY_CHECKS=0;
     
+    Select 1;
 		Delete from user where user.username = username;
     
     Set QueryResult = True;
@@ -1199,7 +1200,7 @@ DELIMITER ;
 Drop procedure if exists AllCommentsOnPost;
 DELIMITER ;;
 CREATE  DEFINER=`root`@`localhost` PROCEDURE `AllCommentsOnPost`(
-IN post_id int
+IN post_id__ int
 )
 COMMENT 'All Comments on a post in the class'
 sp: BEGIN
@@ -1221,15 +1222,16 @@ sp: BEGIN
     
                          -- Verification here--
 	-- select 1;
-		Select count(*) into flag from post where post.post_id = post_id;
-        if flag = 0 then
-			leave sp;
-		 end if;  set flag = 0;   -- for using it again	
+--		Select count(*) into flag from post where post.post_id = post_id__;
+--         if flag = 0 then
+-- 			leave sp;
+-- 		 end if;  set flag = 0;   -- for using it again	
  --   select 2; 
     
                          -- logic here--
                          
           Select pc.* from post p join post_comment pc on pc.post_id = p.post_id 
+          where pc.post_id = post_id__
           order by pc.comment_time asc;
           
     COMMIT;
