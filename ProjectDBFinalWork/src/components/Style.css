@@ -111,6 +111,7 @@
     
     height: 300px;
     border: 2px solid rgb(73, 177, 81);
+    z-index: -2;
     margin: 10px 20px;
     border-radius: 10px;
 
@@ -126,36 +127,44 @@
 .upcoming {
     width: 22%;
     border: 2px solid #E4E4E4;
+    z-index: -1;
     height: 150px;
     margin: 20px;
     padding: 10px 20px;
     border-radius: 8px;
     color: #6C6969;
 }
-
+.posts{
+    display: flex;
+    flex-direction: column;
+}
 .flex {
     display: flex;
     flex-direction: row;
 }
 
+
 .announcement {
-    border: 2px solid #E4E4E4;
+
     height: 90px;
-    width: 80%;
+    width: 200%;
     margin: 20px;
     border-radius: 8px;
     
+
     box-shadow: 10px 10px 12px #D8CBCB;
 }
 
-.announcement input {
+.input1 {
     width: 78%;
     height: 40px;
     margin: 20px 20px 20px 5px;
     border: none;
     
     
+    
 }
+
 
 .announcement .input .logo {
     margin: 10px 10px 5px 10px;
@@ -165,6 +174,7 @@
     margin: auto;
     padding: 3.5rem 2.5rem;
     max-width: 47.5rem;
+
 }
 
 .section h1 {
@@ -224,6 +234,7 @@
 
     width: 50.5rem;
     border-bottom: 1px solid #2A53F6;
+    
     height: 120px;
     margin-top: 20px;
     font-family: Arial, Helvetica, sans-serif;
@@ -376,14 +387,16 @@
 
 .flexxx {
     display: flex;
-    flex-direction: row;
+        
+    flex-direction: column;
     justify-content: space-between;
 }
 
 .stream {
     margin-top: 40px;
     border: 2px solid #E4E4E4;
-    width: 100%;
+    width: 200%;
+    
     font-family: Arial, Helvetica, sans-serif;
     padding: 10px;
     border-radius: 6px;
@@ -406,4 +419,19 @@
     color: #6C6969;
     margin-left: 4px;
     font-weight: 200;
+}
+.heading2{
+    height: 80%;
+        margin:0;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        z-index: -1;
+    
+    
+}
+.heading2 h1{
+    animation: rotatee 3s linear infinite;
 }

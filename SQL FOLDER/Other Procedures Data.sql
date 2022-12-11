@@ -1517,3 +1517,153 @@ DELIMITER ;
 
 
 
+
+Drop procedure if exists UploadAndSubmitAssignment	;
+DELIMITER ;;
+CREATE  DEFINER=`root`@`localhost` PROCEDURE `UploadAndSubmitAssignment`(
+IN stdUsername varchar(35),
+In assignmentId int,
+IN FileName varchar(100),
+IN FileSize varchar(100),
+IN FileContentType varchar(100),
+In External_File LONGBLOB,
+OUT QueryResult Boolean,
+OUT Id varchar(35)
+)
+COMMENT 'UploadAndSubmitAssignment'
+sp: BEGIN
+     DECLARE flag int; 	 
+	 DECLARE class_id__ int;
+    
+    DECLARE exit handler for sqlexception
+	   BEGIN
+         select "error"; Set QueryResult = false;
+	   ROLLBACK;
+	 END;
+	   
+	 DECLARE exit handler for sqlwarning
+	  BEGIN
+		 -- WARNING
+         select "warning"; Set QueryResult = false;
+	  ROLLBACK;
+	 END;
+	START TRANSACTION;
+    SET FOREIGN_KEY_CHECKS=0;
+    
+                         -- Verification here--
+  set id = -10;                  
+                    -- does assignment exist or not.
+		Select count(*),class_id into flag,class_id__ from assignment a where a.a_id = assignmentId;
+        if flag = 0 then
+			Set QueryResult = false;
+			leave sp;
+		 end if;  set flag = 0;   -- for using it again 
+  
+  set id = -2;
+					-- is student of the class
+         Call IsStudentOfaClass(class_id__, stdUsername, @flag2);
+         if @flag2 = 0 then
+			Set QueryResult = false;
+			leave sp;
+		 end if;  
+         
+   set id = -3;
+   
+   
+                          -- Logic Here --
+	
+	INSERT INTO `my_classroom`.`assignment_submission`
+		(`std_username`,`assign_id`, `FileName`, `FileSize`,`Data_submitted`,`FileContentType`,`External_File`)
+		VALUES(stdUsername, assignmentId, FileName, FileSize,now(), FileContentType, External_File);
+
+        SELECT LAST_INSERT_ID() into Id;
+		 
+        Set QueryResult = true;
+        
+    COMMIT;
+	END ;;
+DELIMITER ;
+
+
+
+
+
+
+Drop procedure if exists SetDownloadLinkSubmission	;
+DELIMITER ;;
+CREATE  DEFINER=`root`@`localhost` PROCEDURE `SetDownloadLinkSubmission`(
+IN downloadURl varchar(100),
+In submission_Id int,
+OUT QueryResult Boolean
+)
+COMMENT 'SetDownloadLinkSubmission'
+sp: BEGIN
+     DECLARE flag int; 	 
+     DECLARE exit handler for sqlexception
+	   BEGIN
+         select "error"; Set QueryResult = false;
+	   ROLLBACK;
+	 END;
+	   
+	 DECLARE exit handler for sqlwarning
+	  BEGIN
+		 -- WARNING
+         select "warning"; Set QueryResult = false;
+	  ROLLBACK;
+	 END;
+	START TRANSACTION;
+    SET FOREIGN_KEY_CHECKS=0;
+    
+                         -- Verification here--
+ 	select 1;
+
+    UPDATE assignment_submission s SET s.DownloadUrl = downloadURl
+    WHERE s.submission_id = submission_Id;
+        Set QueryResult = true;
+Select 2;
+        
+    COMMIT;
+	END ;;
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+Drop procedure if exists downloadFile;
+DELIMITER ;;
+CREATE  DEFINER=`root`@`localhost` PROCEDURE `downloadFile`(
+IN stdUsername varchar(35),
+In assignmentId int
+)
+COMMENT 'Download the file'
+sp: BEGIN
+     DECLARE flag int; DECLARE var_id int;
+	 DECLARE exit handler for sqlexception
+	   BEGIN
+		  select "error"
+	   ROLLBACK;
+	 END;
+	   
+	 DECLARE exit handler for sqlwarning
+	  BEGIN
+         select "warning"
+	  ROLLBACK;
+	 END;
+
+	START TRANSACTION;
+    SET FOREIGN_KEY_CHECKS=0;
+    
+    
+		Select * from assignment_submission s
+        where s.std_username = stdUsername and s.assign_id = assignmentId;
+    
+    
+    COMMIT;
+	END ;;
+DELIMITER ;
+

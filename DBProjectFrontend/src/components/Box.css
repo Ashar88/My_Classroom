@@ -1,9 +1,0 @@
-.bttn {
-    all: unset;
-    cursor: pointer;
-}
-
-.bttn:focus {
-    outline: orange 5px auto;
-}
-

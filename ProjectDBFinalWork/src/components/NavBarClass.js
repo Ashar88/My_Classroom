@@ -1,5 +1,5 @@
 import React, { useEffect,useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -14,6 +14,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import Abc from './Abc';
+import axios from 'axios';
 import People from './People';
 import { useGlobalContext } from '../context';
 import { TryRounded } from '@mui/icons-material';
@@ -27,14 +28,21 @@ const styles = {
   '&:hover': {
     textDecoration: 'underline',
 }}
-const pages = ['Stream', 'Classwork', 'People'];
+const pages = ['Stream', 'Classwork', 'People','Submission'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const NavBarClass = () => {
  const [anchorElNav, setAnchorElNav] = React.useState(null);
- const {clickpeple,classid,setclickpeople,setclasswork,isclasswork}=useGlobalContext();
+ const {clickpeple,setclickpeople,setclasswork,isclasswork}=useGlobalContext();
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const {id:classid} = useParams()
+  const [isteacher,setisteacher]=useState(false);
+  const Session = localStorage.getItem("user");
   const links=[{name:"Stream",link:`/class/${classid}`},{name:"ClassWork",link:`/class/${classid}/classwork`}, {name:"People",link:`/class/${classid}/people`}]
+
+  const sub={name:"Submission",
+  link:`/class/${classid}/Submission`
+}
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -45,7 +53,19 @@ const NavBarClass = () => {
   const fetch=()=>{
 
   }
-  
+  const IsteacherOfclassAPI = () => {
+    axios
+      .post("http://localhost:8086/IsTeacherOfaClass", {
+        class_id: classid,
+        TeacherUsername: Session,
+      })
+
+      .then((result) => {
+        setisteacher(result.data);
+      })
+
+      .catch((err) => console.log(err));
+  };
   const handleCloseNavMenu = (ind) => {
     if(ind=='2')
     {
@@ -62,7 +82,9 @@ const NavBarClass = () => {
     }
     setAnchorElNav(null);
   };
-
+useEffect(()=>{
+IsteacherOfclassAPI()
+},[])
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
@@ -125,7 +147,7 @@ const NavBarClass = () => {
               textDecoration: 'none',
             }}
           >
-            ClassNames a
+            ClassNames 
           </Typography>
         
           <Box sx={{ flexGrow: 1, display: { md: 'flex' } }}>
@@ -136,9 +158,21 @@ const NavBarClass = () => {
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
               
+              
                <Link to={curr.link} className='lin'> {curr.name}</Link> 
               </Button>
             ))}
+            {
+              isteacher &&  <Button
+                
+                
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+              
+              
+               <Link to={sub.link} className='lin'> {sub.name}</Link> 
+              </Button>
+            }
           </Box>
             
          {//remove user menu

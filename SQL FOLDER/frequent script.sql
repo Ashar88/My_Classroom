@@ -120,6 +120,7 @@ call ViewAllAssignment("2");
 
 call CommentOnPost(4,null,"haider92","Hey guyz i have missed some details, will share it in some other post",@var); 
 call CommentOnPost(4,"Ashar88",null,"Alright teacher",@var); 
+Select @var;
 call CommentOnPost(4,"Yousuf2",null,"Please share it quick, sir.",@var); 
 
 -- incorrect input
@@ -145,8 +146,29 @@ call ViewGrade(3,"Yousuf2");
 
  -- ****************** third verified input**********************
 
+call SetDownloadLinkSubmission("http://localhost:8086/download/10", 9, @var);
 
+call downloadFile(1);
+
+
+-- INSERT INTO `my_classroom`.-- `assignment_submission`
+-- (`std_username`,
+-- `assign_id`,
+-- `External_File`)
+-- VALUES ("Ashar88",4, null);
+
+-- INSERT INTO `my_classroom`.`assignment_submission`
+-- (`std_username`,
+-- `assign_id`,
+-- `External_File`)
+-- VALUES ("Ashar88",4, load_file('/jabba'));
  
+-- Select External_File from assignment_submission where submission_id = 1;
+
+
+ -- ****************** third verified input**********************
+
+
  
 --  
  CREATE  DEFINER=`root`@`localhost` PROCEDURE `CreateJabasroom`(
@@ -158,7 +180,7 @@ IN descript varchar(50)
 )
 COMMENT 'Creating Classroom by the teacher'
 sp: BEGIN
-     declare flag int;
+     declare flag intsubmission_id;
 	 DECLARE exit handler for sqlexception
 	   BEGIN
 		 -- ERROR

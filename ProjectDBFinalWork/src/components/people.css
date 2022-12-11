@@ -1,4 +1,13 @@
-
+.buttons{
+    
+    width: 70vw;
+    display: flex;
+    margin-bottom:20px;
+    gap:10px;
+    align-items: center;
+    
+    flex-direction: row;
+}
 
 .id-btn {
     border: 1px solid white;
@@ -9,11 +18,12 @@
 
 .bttnn{
     border:none;
-    margin:2vw;
-    
+    margin:0px;
+    background-color: #75c9b7;
     display: flex;
     width:60vw;
     border-radius: 10px;
+    
 }
 .bttnn:hover{
     background-color:aquamarine
@@ -87,7 +97,7 @@
 }
 .lin:hover{
     color: #3c4043;
-    style:none;
+    
     
 }
 .dot {
@@ -187,14 +197,26 @@
     padding: 16px;
 }
 
-.section .students .s {
-    border-bottom: 2px solid #E4E4E4;
+.section .students  {
+    border-bottom: 2px solid #ac0303;
+    
     padding: 16px;
     letter-spacing: .01785714em;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 0.875rem;
     line-height: 1.25rem;
     color: #3c4043;
+
+}
+.s{
+display:flex;
+flex-direction: column;
+
+
+}
+.q{
+display: inline;
+
 
 }
 
@@ -210,6 +232,7 @@
 .classwork {
     margin: auto;
     max-width: 47.5rem;
+    
 }
 
 .classwork .c1 {

@@ -17,6 +17,9 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import './link.css'
 import MailIcon from '@mui/icons-material/Mail';
 import classdata from './classdata'
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import { useEffect } from 'react';
 const Abc = () => {
   const{issidebaropen}=useGlobalContext();
   const [state, setState] = React.useState({
@@ -25,6 +28,55 @@ const Abc = () => {
     bottom: false,
     right: false,
   });
+  const { id } = useParams();
+  const Session = localStorage.getItem("user");
+   const [date,setdate]=useState(false);
+
+    const [teacherdata,setteacherdata]=useState("")
+    const [stddata,setstddata]=useState("")
+     const FetchClassOfStudent =  () => {
+      //setload(true);
+     axios
+      .post("http://localhost:8086/AllClassroomsOfStudent", {
+        //class_id: id,
+        
+        "username":Session,
+      })
+
+      .then((result) => {
+        console.log(Session)
+        //console.log(result.data)
+
+        setstddata(result.data);
+        //setload(false);
+      })
+
+      .catch((err) => console.log(err));
+  };
+   const FetchClassOfTeacher =  () => {
+    //setload(true);
+     axios
+      .post("http://localhost:8086/AllClassroomsOfTeacher", {
+        //class_id: id,
+
+        "username":Session,
+      })
+
+      .then((result) => {
+       // console.log(result.data)
+console.log(Session)
+        setteacherdata(result.data);
+        //setload(false);
+      })
+
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(()=>{
+    FetchClassOfStudent();
+    FetchClassOfTeacher();
+    // console.log(date+"1");
+  },[date])
 
   const [data,setdata]=useState(classdata)
 
@@ -44,20 +96,36 @@ const Abc = () => {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {classdata.map((text, index) => (
+        { 
+          stddata.length&&stddata?.map((text, index) => (
           <ListItem key={text} disablePadding >
-           <Link to={`/class/${text.id}`} className='linkss'> <ListItemButton >
+           <Link to={`/class/${text.class_id}`} className='linkss'> <ListItemButton >
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>
-              <ListItemText primary={text.name} />
+              <ListItemText primary={text.class_name} />
+            </ListItemButton></Link>
+          </ListItem>
+        ))}
+        {
+          teacherdata.length &&teacherdata?.map((text, index) => (
+          <ListItem key={text} disablePadding >
+           <Link to={`/class/${text.class_id}`} className='linkss'> <ListItemButton >
+              <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text.class_name} />
             </ListItemButton></Link>
           </ListItem>
         ))}
       </List>
       <Divider />
-      
+      {
+    
+      }
     </Box>
+
+    
   );
 
   
