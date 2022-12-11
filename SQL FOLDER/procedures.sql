@@ -78,7 +78,6 @@ Select "Post";
 			title varchar(35),
 			descript varchar(300),
 			dateCreated dateTime,
-            External_File LONGBLOB,
 			
 			FOREIGN KEY (class_id) REFERENCES class(class_id),
 			primary key (post_id)
@@ -92,7 +91,6 @@ Select "Post";
 			Date_created dateTime,
 			due_date dateTime,
 			descript varchar(300),
-            External_File LONGBLOB,
             
 			FOREIGN KEY (class_id) REFERENCES class(class_id),
 			primary key (a_id)
@@ -132,6 +130,11 @@ Select "Post";
 			submission_id int auto_increment,
             std_username varchar(100),         -- submission by student
 			assign_id int,                     -- assignment of which class
+            FileName varchar(50),
+            FileSize varchar(50),
+            FileContentType varchar(50),
+            Data_submitted datetime,
+            DownloadUrl varchar(200),
             External_File LONGBLOB,
 			
 			FOREIGN KEY (assign_id) REFERENCES Assignment(a_id),

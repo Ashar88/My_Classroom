@@ -1,19 +1,21 @@
 
 
-import * as React from 'react';
+import React, { useState } from "react";
+import axios from "axios";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
+import { Link, useNavigate } from "react-router-dom";
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Alert } from "@mui/material";
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -26,23 +28,66 @@ function Copyright(props) {
     </Typography>
   );
 }
-const theme = createTheme();
+
+
+
 
 const Signup = () => {
-    const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    
+  const nav=useNavigate();
+const [fname,setfname]=useState("");
+  const [lname,setlname]=useState("");
+  const [uname,setuname]=useState("");
+  const [password,setpassword]=useState("");
+  const [email,setemail]=useState("");
+  const [phone,setphone]=useState("");
+  const [gender,setgender]=useState("");
+  const[age,setage]=useState("")
+const theme = createTheme();
+  
+const SignApi =  () => {
+     axios
+      .post("http://localhost:8086/RegisterUser", {
+		"username": uname,
+		"first_name": fname,
+		"last_name": lname,
+		"user_password": password,
+		"email" : email,
+		"phone_no" : phone, 
+		"gender": gender,
+	 	"age": age
+	}
+)
 
-    const db={
-        fname:data.get('fname'),
-        password:data.get('password'),
-        lname:data.get('lname'),
-        UID:data.get('UID'),
-        Uname:data.get('Uname')
+      .then((result) => {
 
-        
-    };
+
+        console.log(result.data);
+
+        if(result)
+        {
+          // alert("Register Sucessfull!")
+         <Alert severity="error">This is an error alert — check it out!</Alert>
+          nav("/");
+
+        }
+        else
+        {
+          alert("Register UnSucessfull!")
+        }
+      })
+
+      .catch((err) => console.log(err));
+  };
+    const handleSubmit = () => {
+      console.log(fname);
+      console.log(lname);
+      console.log(uname);
+      console.log(email);
+      console.log(phone);
+      console.log(age);
+      console.log(gender);
+      console.log(password);
+    SignApi();
     
   };
   return (
@@ -88,7 +133,9 @@ const Signup = () => {
                 id="fname"
                 label="First Name"
                 name="fname"
-                
+                onChange={(e)=>{
+                  setfname(e.target.value)
+                }}  
                 autoFocus
               />
               <TextField
@@ -98,7 +145,9 @@ const Signup = () => {
                 id="lname"
                 label="Last Name"
                 name="lname"
-                
+                onChange={(e)=>{
+                  setlname(e.target.value)
+                }}
                 autoFocus
               />
               <TextField
@@ -108,7 +157,9 @@ const Signup = () => {
                 id="Uname"
                 label="User Name"
                 name="Uname"
-                
+                onChange={(e)=>{
+                  setuname(e.target.value)
+                }}
                 autoFocus
               />
               <TextField
@@ -116,9 +167,11 @@ const Signup = () => {
                 required
                 fullWidth
                 id="UID"
-                label="User Id"
+                label="Email"
                 name="UID"
-                
+                onChange={(e)=>{
+                  setemail(e.target.value)
+                }}
                 autoFocus
               />
                <TextField
@@ -128,7 +181,9 @@ const Signup = () => {
                 id="PNO"
                 label="Phone No"
                 name="PNO"
-                
+                onChange={(e)=>{
+                  setphone(e.target.value)
+                }}
                 autoFocus
               />
               <TextField
@@ -139,16 +194,34 @@ const Signup = () => {
                 label="Password"
                 type="password"
                 id="password"
+                onChange={(e)=>{
+                  setpassword(e.target.value)
+                }}
                 autoComplete="current-password"
               />
               <TextField
                 margin="normal"
                 required
                 fullWidth
-                name="Cpassword"
-                label="Confirm Password"
-                type="Cpassword"
-                id="Cpassword"
+                name="password"
+                label="Age"
+                
+                id="password"
+                onChange={(e)=>{
+                  setage(e.target.value)
+                }}
+                autoComplete="current-password"
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                
+                label="Gender"
+                
+                onChange={(e)=>{
+                  setgender(e.target.value)
+                }}
                 autoComplete="current-password"
               />
               <FormControlLabel
@@ -156,22 +229,23 @@ const Signup = () => {
                 label="Remember me"
               />
               <Button
-                type="submit"
+                
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2,background:"#75c9b7" }}
+                onClick={handleSubmit}
               >
                 Sign In
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
+                  <Link to="/" variant="body2">
                     Forgot password?
                   </Link>
                 </Grid>
                 <Grid item>
                   <Link href="#" variant="body2">
-                    {"Don't have an account? Sign Up"}
+                    {"Already Have Account? Login"}
                   </Link>
                 </Grid>
               </Grid>
