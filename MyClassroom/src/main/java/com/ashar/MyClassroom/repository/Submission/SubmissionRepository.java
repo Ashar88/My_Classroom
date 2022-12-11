@@ -75,11 +75,30 @@ public class SubmissionRepository {
 	}
 
 
+	@SuppressWarnings("deprecation")
 	public List<Attachment> downloadFile(String stdUsername, int assignmentId) {
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		List<Attachment> Attachment = jdbcTemplate.query("call downloadFile(?, ?);", new Object[] {stdUsername,assignmentId},new AttachmentRowMapper());
 		
 		return Attachment;
+	}
+
+
+	public boolean isSubmissionAvaliable(String stdUsername, int assignmentId) throws SQLException {
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		callableStatement = jdbcTemplate.getDataSource().getConnection()
+				.prepareCall("{call isSubmissionAvaliable(?, ?, ?)}");
+		
+		callableStatement.setString(1, stdUsername);
+		callableStatement.setInt(2, assignmentId);
+
+		callableStatement.registerOutParameter(3, Types.BOOLEAN);
+		callableStatement.executeUpdate();
+
+		boolean result = callableStatement.getBoolean(3);
+		callableStatement.getConnection().close();
+		
+		return result;
 	}
 
 

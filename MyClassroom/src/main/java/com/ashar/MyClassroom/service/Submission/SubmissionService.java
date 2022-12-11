@@ -20,7 +20,7 @@ public interface SubmissionService {
 
 	 List<Attachment> downloadFile(String stdUsername, int assignmentId);
 
-//	HttpHeaders downloadFile(String stdUsername, int assignmentId);
+	boolean isSubmissionAvaliable(String stdUsername, int assignmentId) throws SQLException;
 
 
 }

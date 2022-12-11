@@ -148,7 +148,7 @@ call ViewGrade(3,"Yousuf2");
 
 call SetDownloadLinkSubmission("http://localhost:8086/download/10", 9, @var);
 
-call downloadFile(1);
+call downloadFile("Ashar88", 3);
 
 
 -- INSERT INTO `my_classroom`.-- `assignment_submission`

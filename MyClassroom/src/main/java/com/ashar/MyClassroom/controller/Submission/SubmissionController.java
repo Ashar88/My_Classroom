@@ -3,7 +3,7 @@ package com.ashar.MyClassroom.controller.Submission;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
-
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -67,5 +68,17 @@ public class SubmissionController {
 	                .body(new ByteArrayResource(attachment.getData()));
 	        
 	    }
-	 	
+	 
+		@PostMapping("/isSubmissionAvaliable")
+		public boolean isSubmissionAvaliable(@RequestBody Map<String,String> obj )
+				throws SQLException, IOException {
+
+			String stdUsername = obj.get("stdUsername");
+			int assignmentId = Integer.parseInt(obj.get("assignmentId"));
+			
+			 System.out.println(stdUsername + " " + assignmentId );
+			 return  SubmissionService.isSubmissionAvaliable(stdUsername, assignmentId);
+		}
+		
+		
 }

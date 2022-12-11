@@ -1667,3 +1667,46 @@ sp: BEGIN
 	END ;;
 DELIMITER ;
 
+
+
+
+
+Drop procedure if exists isSubmissionAvaliable;
+DELIMITER ;;
+CREATE  DEFINER=`root`@`localhost` PROCEDURE `isSubmissionAvaliable`(
+IN stdUsername varchar(35),
+In assignmentId int,
+OUT QueryResult Boolean
+)
+COMMENT 'Checking if the Submission Avaliable or not'
+sp: BEGIN
+     DECLARE flag int; 	 
+     DECLARE exit handler for sqlexception
+	   BEGIN
+         select "error"; Set QueryResult = false;
+	   ROLLBACK;
+	 END;
+	   
+	 DECLARE exit handler for sqlwarning
+	  BEGIN
+		 -- WARNING
+         select "warning"; Set QueryResult = false;
+	  ROLLBACK;
+	 END;
+	START TRANSACTION;
+    SET FOREIGN_KEY_CHECKS=0;
+    
+    
+		Select count(*) into flag from assignment_submission s
+        where s.std_username = stdUsername and s.assign_id = assignmentId;
+    
+		if flag = 0 then
+			Set QueryResult = false;
+			leave sp;
+		end if;  set flag = 0;   -- for using it again 
+    
+      Set QueryResult = True;
+    
+    COMMIT;
+	END ;;
+DELIMITER ;

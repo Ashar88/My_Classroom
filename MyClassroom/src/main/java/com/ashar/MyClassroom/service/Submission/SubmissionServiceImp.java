@@ -48,6 +48,11 @@ public class SubmissionServiceImp implements SubmissionService {
 		return SubmissionRepo.downloadFile(stdUsername, assignmentId);
 	}
 
+	@Override
+	public boolean isSubmissionAvaliable(String stdUsername, int assignmentId) throws SQLException {
+		return SubmissionRepo.isSubmissionAvaliable(stdUsername, assignmentId);
+	}
+	
 	
 	public static String humanReadableByteCountSI(long bytes) {
 	    if (-1000 < bytes && bytes < 1000) {
@@ -61,6 +66,4 @@ public class SubmissionServiceImp implements SubmissionService {
 	    return String.format("%.1f %cB", bytes / 1000.0, ci.current());
 	}
 
-
-	
 }
